@@ -2,67 +2,38 @@ import express, { Express, Request, Response } from "express";
 import bodyParser from "body-parser";
 import cors from 'cors';
 import swaggerUI from "swagger-ui-express";
-import swaggerJSDocs from "swagger-jsdoc";
+import swaggerSpec from "@/configs/swagger/swagger-docs";
+import routes from "@/routes/routes";
+import morgan from "morgan";
 
 const app: Express = express();
-const port = 8080;
-
-const definitions = {
-    info: {
-        // API information (required)
-        title: 'Wayfarer', // Title (required)
-        version: '1.0.0', // Version (required)
-    },
-    securityDefinitions: {
-        bearerAuth: {
-            type: 'apiKey',
-            name: 'Authorization',
-            scheme: 'bearer',
-            in: 'header',
-        },
-    },
-};
-
-const options = {
-    definition: {
-        openapi: "3.1.0",
-        info: {
-            title: "Swagger Express API - Vey badminton api",
-            version: "0.1.0",
-            description:
-                "Document swagger for vey badminton api",
-            license: {
-                name: "MIT",
-                url: "https://spdx.org/licenses/MIT.html",
-            },
-            contact: {
-                name: "Vey",
-                url: "https://github.com/tranvancu185",
-                email: "phuquytran185@gmail.com",
-            },
-        },
-        servers: [
-            {
-                url: "http://localhost:8080",
-            },
-        ],
-    },
-    apis: ["./routes/*.ts"],
-};
-
-const swaggerSpec = swaggerJSDocs(options);
+const PORT = process.env.PORT || 8000;
 
 app.use(
-    "/api-docs",
+    "/api/api-docs",
     swaggerUI.serve,
-    swaggerUI.setup(swaggerSpec, { explorer: true })
+    swaggerUI.setup(swaggerSpec, {
+        explorer: true,
+        swaggerOptions: {
+            url: "/swagger.json",
+        },
+    })
 );
+app.use(cors());
+app.use(bodyParser.urlencoded({
+    extended: true,
+}));
+app.use(express.json());
+app.use(morgan("tiny"));
+app.use(express.static("public"));
 
+// API routes
+app.use("/api", routes);
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello, World!');
 });
 
-app.listen(port, () => {
-    console.log(`Server is running on port  ${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on port  ${PORT}`);
 });
