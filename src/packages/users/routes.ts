@@ -1,38 +1,40 @@
 import express, { Router, Request, Response } from 'express';
+import { UserController } from './user-controller';
 
 // Create a new router instance
-const userrouter: Router = express.Router();
+const userRouter: Router = express.Router();
+const userController = new UserController();
 
 // Define your routes
-userrouter.get('/', (req: Request, res: Response) => {
-    // Handle GET request for /users
-    res.send('Get all users');
+userRouter.get('/', async (req: Request, res: Response) => {
+    const respone = await userController.GetListUsers(req);
+    res.json(respone)
 });
 
-userrouter.get('/:id', (req: Request, res: Response) => {
+userRouter.get('/:id', (req: Request, res: Response) => {
     // Handle GET request for /users/:id
     const userId = req.params.id;
-    res.send(`Get user with ID ${userId}`);
+    res.json({ id: userId });
 });
 
-userrouter.post('/', (req: Request, res: Response) => {
+userRouter.post('/create', (req: Request, res: Response) => {
     // Handle POST request for /users
     const newUser = req.body;
     res.send('Create a new user');
 });
 
-userrouter.put('/:id', (req: Request, res: Response) => {
+userRouter.put('/:id/edit', (req: Request, res: Response) => {
     // Handle PUT request for /users/:id
     const userId = req.params.id;
     const updatedUser = req.body;
     res.send(`Update user with ID ${userId}`);
 });
 
-userrouter.delete('/:id', (req: Request, res: Response) => {
+userRouter.delete('/:id/delete', (req: Request, res: Response) => {
     // Handle DELETE request for /users/:id
     const userId = req.params.id;
     res.send(`Delete user with ID ${userId}`);
 });
 
 // Export the router
-export default userrouter;
+export default userRouter;

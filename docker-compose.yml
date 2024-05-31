@@ -1,0 +1,48 @@
+version: "3.8" # Specify Docker Compose version
+
+services:
+  vey-badminton-ws: # Your app service name
+    build: . # Build from the Dockerfile in the current directory
+    ports:
+      - "3000:3000" # Expose port 3000 of the container
+    depends_on:
+      - mongodb
+      - redis
+      - elasticsearch
+    environment:
+      - MONGODB_URI=mongodb://mongodb:27017/vey_badminton_db # MongoDB connection string
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - ELASTICSEARCH_HOST=elasticsearch
+      - ELASTICSEARCH_PORT=9200
+    volumes:
+      - .:/app # Mount current directory into the container
+
+  mongodb: # MongoDB service
+    image: mongo:latest
+    ports:
+      - "27017:27017" # Expose MongoDB port
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=password
+    volumes:
+      - mongodb_data:/data/db
+
+  redis: # Redis service
+    image: redis:latest
+    ports:
+      - "6379:6379" # Expose Redis port
+
+  elasticsearch: # Elasticsearch service
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.17.12
+    ports:
+      - "9200:9200" # Expose Elasticsearch HTTP port
+      - "9300:9300" # Expose Elasticsearch TCP port
+    environment:
+      - discovery.type=single-node
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+
+volumes:
+  mongodb_data:
+  elasticsearch_data:
