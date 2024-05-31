@@ -1,4 +1,10 @@
 import { IBaseResponse } from '@/packages/commons/base-interfaces'
-import User from '@/models/user'
 
-export interface IGetListUsersRespone extends IBaseResponse<User[]> { }
+export interface ILoginRepsponseData {
+    token: string;
+    refreshToken: string;
+    expiresIn: number;
+    user_id: number; // Chỉ lấy user_id
+}
+
+export interface ILoginResponse extends IBaseResponse<ILoginRepsponseData> { }

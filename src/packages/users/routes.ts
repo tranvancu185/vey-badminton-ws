@@ -6,6 +6,32 @@ const userRouter: Router = express.Router();
 const userController = new UserController();
 
 // Define your routes
+/**
+ * @swagger
+ * tags:
+ *   name: Users
+ *   description: User management
+ * /users:
+ *   post:
+ *     summary: Create a new user
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             $ref: '#/models/User'
+ *     responses:
+ *       200:
+ *         description: The created user.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/models/User'
+ *       500:
+ *         description: Some server error
+ *
+ */
 userRouter.get('/', async (req: Request, res: Response) => {
     const respone = await userController.GetListUsers(req);
     res.json(respone)

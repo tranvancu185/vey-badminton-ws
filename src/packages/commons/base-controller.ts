@@ -1,9 +1,13 @@
-import { IDiscordLogger } from "./base-interfaces";
-import loggerDiscord from "@/configs/logger/discord-logger";
+import loggerDiscord, { IDiscordLogger } from "@/configs/logger/discord-logger";
+import createLogger, { IProps as ILogger } from "@/configs/logger/logger";
 
 export default class BaseController<T> {
     public formatString() {
         return true;
+    }
+
+    public createLogger({ fileName, infoLog, includeDate }: ILogger) {
+        return createLogger({ fileName, infoLog, includeDate });
     }
 
     public loggerDiscord({ level, message, error, json, description, meta }: IDiscordLogger) {

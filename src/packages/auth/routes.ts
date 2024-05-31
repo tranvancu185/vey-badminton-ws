@@ -1,12 +1,13 @@
 import express, { Router, Request, Response } from 'express';
-
+import { AuthController } from './auth-controller';
+import { ILoginResponse } from './auth-interfaces';
 // Create a new router instance
 const authRouter: Router = express.Router();
+const authController = new AuthController();
 
-authRouter.post('/login', (req: Request, res: Response) => {
-    // Handle POST request for /users
-    const newUser = req.body;
-    res.send('Create a new user');
+authRouter.post('/login', async (req: Request, res: Response) => {
+    const respone: ILoginResponse = await authController.Login(req);
+    res.json(respone)
 });
 
 // Export the router

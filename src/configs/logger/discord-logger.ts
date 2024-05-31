@@ -19,5 +19,13 @@ const loggerDiscord = new DiscordLogger({
         console.error('error from discord', err);
     }
 });
+export interface IDiscordLogger {
+    level?: 'error' | 'warn' | 'info' | 'debug' | 'verbose' | 'silly';
+    message: string;
+    error?: Error;
+    json?: any;
+    description?: string;
+    meta?: { [key: string]: string | number | Date };
+}
 
 export default loggerDiscord;

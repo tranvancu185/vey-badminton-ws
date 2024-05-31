@@ -7,7 +7,6 @@ import morganMiddleware from '@/configs/logger/morganMiddleware'
 
 import swaggerSpec from "@/configs/swagger/swagger-docs";
 import routes from "@/packages/routes";
-import pool from '@/configs/db/mariadb';
 import connectDB from '@/configs/db/mongodb';
 
 const app: Express = express();
@@ -38,11 +37,5 @@ app.get('/', (req: Request, res: Response) => {
 
 // connectDB(); // Kết nối đến MongoDB
 app.listen(PORT, async () => {
-    // try {
-    //     await pool.getConnection(); // Kiểm tra kết nối đến MariaDB
-    //     console.log(`MariaDB Connected`);
-    // } catch (error: any) {
-    //     console.error(`MariaDB Connection Error: ${error?.message ?? ''}`);
-    // }
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port ${PORT}\n URL: http://localhost:${PORT}`);
 });
