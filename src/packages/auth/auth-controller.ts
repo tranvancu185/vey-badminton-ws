@@ -4,7 +4,6 @@ import BaseController from "@/packages/commons/base-controller";
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import User from "@/databases/models/users";
 import UserService from "../users/user-services";
 import { ILoginResponse } from "@/packages/auth/auth-interfaces";
 import IUser from "@/interfaces/IUser";
@@ -21,7 +20,6 @@ export class AuthController extends BaseController<IUser> {
 
         try {
             const { user_email, user_password } = req.body;
-            console.log(req.body);
             // 1. Kiểm tra đầu vào
             if (!user_email || !user_password) {
                 result.message = 'Email and password are required.';
@@ -30,7 +28,6 @@ export class AuthController extends BaseController<IUser> {
             const userService = new UserService();
             // 2. Tìm người dùng
             const user = await userService.getUserByCondition({ user_email, need_password: true });
-            console.log(user);
             if (!user) {
                 result.message = 'Invalid email or password.';
                 return result;
@@ -60,9 +57,10 @@ export class AuthController extends BaseController<IUser> {
                 expiresIn: 3600,
                 user_id: user.user_id
             };
-
+            throw new Error('Test error');
         } catch (error) {
-            logger.error(`LOGIN FAILED: ${error}`);
+            const err = error as Error;
+            logger.error(JSON.stringify({ error: { name: err.name, message: err.message, stack: err.stack, }, params: req.body, description: 'Login failed!' }));
             result.status = 0;
             result.message = 'Internal server error!'; // Tránh trả về lỗi chi tiết cho người dùng
         }

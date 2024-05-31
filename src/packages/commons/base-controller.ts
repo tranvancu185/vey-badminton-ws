@@ -10,6 +10,15 @@ export default class BaseController<T> {
         return createLogger({ fileName, infoLog, includeDate });
     }
 
+    public parseJSON = (json: string) => {
+        try {
+            return JSON.parse(json);
+        } catch (error) {
+            console.error('Error parsing JSON:', error);
+            return null;
+        }
+    }
+
     public loggerDiscord({ level, message, error, json, description, meta }: IDiscordLogger) {
         try {
             switch (level) {

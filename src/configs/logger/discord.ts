@@ -153,7 +153,6 @@ export default class DiscordLogger {
                 url: this.url,
                 body: postBody
             };
-            console.log(options);
             fetch(options.url, {
                 method: 'POST',
                 signal: AbortSignal.timeout(60000),
