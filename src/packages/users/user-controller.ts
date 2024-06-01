@@ -1,9 +1,10 @@
-import { Request, Response } from "express";
-import { IGetListUsersRespone } from "@/packages/users/user-interfaces";
+import { Request } from "express";
+import { IGetListUsersRespone, IUserFilterParams } from "@/packages/users/user-interfaces";
 import BaseController from "@/packages/commons/base-controller";
 // import { Get, Tags } from "tsoa";
 
 import IUser from "@/interfaces/IUser";
+import UserService from "./user-services";
 
 export class UserController extends BaseController<IUser> {
 
@@ -15,6 +16,10 @@ export class UserController extends BaseController<IUser> {
             data: []
         };
         try {
+            const params: IUserFilterParams = req.query;
+            const userService = new UserService();
+            const dataUser = await userService.getList(params);
+            result.data = dataUser ?? [];
             result.status = 1;
             result.message = 'Get list ussers successfully!';
         } catch (error) {

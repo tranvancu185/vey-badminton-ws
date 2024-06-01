@@ -1,5 +1,5 @@
 export default interface IUser {
-    user_id: number;
+    user_id?: number;
     user_name: string;
     user_email?: string;  // Cho phép null
     user_avatar: string;

@@ -1,29 +1,31 @@
-// import { Op, where, fn, col, WhereOptions, FindOptions, InferAttributes } from 'sequelize';
-// import User, { UserAttributes } from "@/databases/models/users";
-// import IUser from "@/interfaces/IUser";
+import { FindOptions, InferAttributes, Model, ModelCtor } from 'sequelize';
 
-// export default class BaseService<T> {
+export default class BaseService<T extends Model> {
 
-//     protected model: T;
+    constructor(public model: ModelCtor<T>) { }
 
-//     constructor(model: T) {
-//         this.model = model;
-//     }
+    public async getList(params: any): Promise<T[]> {
+        const condition = this.parseFilter(params);
+        const results = await this.model.findAll(condition);
+        return results;
+    }
 
-//     public async getListUsers(params: any): Promise<IUser[]> {
+    public async getById(id: number): Promise<T | null> {
+        const result = await this.model.findByPk(id);
+        return result;
+    }
 
-//         const users = await this.model.findAll(condition);
+    public async getByCondition(params: any): Promise<T | null> {
+        const condition = this.parseFilter(params);
+        const result = await this.model.findOne(condition);
+        return result;
+    }
 
-//         return users;
-//     }
+    public parseFilter(params: any): FindOptions<InferAttributes<T>> {
+        return params as FindOptions<InferAttributes<T>>;
+    }
 
-//     public async getUserById(id: number): Promise<IUser | null> {
-//         const user = await User.findByPk(id, { attributes: { exclude: ['user_password'] } });
-//         return user;
-//     }
-
-//     public async getUserByCondition(params: any): Promise<IUser | null> {
-//         const result = await T.findOne(condition);
-//         return result;
-//     }
-// } 
+    public parseBody(body: any): any {
+        return body as any;
+    }
+} 

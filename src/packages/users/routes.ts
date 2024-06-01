@@ -1,10 +1,9 @@
 import express, { Router, Request, Response } from 'express';
 import { UserController } from './user-controller';
-
+import authenticateToken from '@/middlewares/auth-middleware';
 // Create a new router instance
 const userRouter: Router = express.Router();
-const userController = new UserController();
-
+userRouter.use(authenticateToken);
 // Define your routes
 /**
  * @swagger
@@ -33,6 +32,7 @@ const userController = new UserController();
  *
  */
 userRouter.get('/', async (req: Request, res: Response) => {
+    const userController = new UserController();
     const respone = await userController.GetListUsers(req);
     res.json(respone)
 });

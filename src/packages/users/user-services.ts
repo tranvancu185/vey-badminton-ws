@@ -1,30 +1,95 @@
-// import { Op, where, fn, col, WhereOptions, FindOptions, InferAttributes } from 'sequelize';
 import { Op, FindOptions, InferAttributes } from 'sequelize';
-// import BaseService from "@/packages/commons/base-services";
-import User, { UserAttributes } from "@/databases/models/users";
-import IUser from "@/interfaces/IUser";
+import User from "@/databases/models/users";
+import { IUserFilterParams } from './user-interfaces';
+import BaseService from '../commons/base-services';
+import IUser from '@/interfaces/IUser';
 
-export default class UserService {
+export default class UserService extends BaseService<User> {
 
-    public async getListUsers(params: any): Promise<IUser[]> {
-        const condition = this.parseFilter(params);
-        const users = await User.findAll(condition);
-        return users;
+    private userService: BaseService<User>;
+    constructor() {
+        super(User);
+        this.userService = new BaseService(User);
     }
 
-    public async getUserById(id: number): Promise<IUser | null> {
-        const user = await User.findByPk(id, { attributes: { exclude: ['user_password'] } });
-        return user;
+    public parseBody(body: any): IUser {
+        const bodyParser: any = {};
+        if (body.user_id !== undefined) {
+            bodyParser.user_id = body.user_id;
+        }
+        if (body.user_name !== undefined) {
+            bodyParser.user_name = body.user_name;
+        }
+        if (body.user_email !== undefined) {
+            bodyParser.user_email = body.user_email;
+        }
+        if (body.user_avatar !== undefined) {
+            bodyParser.user_avatar = body.user_avatar;
+        }
+        if (body.user_phone !== undefined) {
+            bodyParser.user_phone = body.user_phone;
+        }
+        if (body.user_full_address !== undefined) {
+            bodyParser.user_full_address = body.user_full_address;
+        }
+        if (body.user_detail_address !== undefined) {
+            bodyParser.user_detail_address = body.user_detail_address;
+        }
+        if (body.user_provice_id !== undefined) {
+            bodyParser.user_provice_id = body.user_provice_id;
+        }
+        if (body.user_district_id !== undefined) {
+            bodyParser.user_district_id = body.user_district_id;
+        }
+        if (body.user_ward_id !== undefined) {
+            bodyParser.user_ward_id = body.user_ward_id;
+        }
+        if (body.user_code !== undefined) {
+            bodyParser.user_code = body.user_code;
+        }
+        if (body.user_status !== undefined) {
+            bodyParser.user_status = body.user_status;
+        }
+        if (body.user_birthday !== undefined) {
+            bodyParser.user_birthday = body.user_birthday;
+        }
+        if (body.user_description !== undefined) {
+            bodyParser.user_description = body.user_description;
+        }
+        if (body.user_properties !== undefined) {
+            bodyParser.user_properties = body.user_properties;
+        }
+        if (body.user_config !== undefined) {
+            bodyParser.user_config = body.user_config;
+        }
+        if (body.user_password !== undefined) {
+            bodyParser.user_password = body.user_password;
+        }
+        if (body.user_role_id !== undefined) {
+            bodyParser.user_role_id = body.user_role_id;
+        }
+        if (body.user_department_id !== undefined) {
+            bodyParser.user_department_id = body.user_department_id;
+        }
+        if (body.user_position_id !== undefined) {
+            bodyParser.user_position_id = body.user_position_id;
+        }
+        if (body.user_join_date !== undefined) {
+            bodyParser.user_join_date = body.user_join_date;
+        }
+        if (body.user_deleted_at !== undefined) {
+            bodyParser.user_deleted_at = body.user_deleted_at;
+        }
+        if (body.user_created_at !== undefined) {
+            bodyParser.user_created_at = body.user_created_at;
+        }
+        if (body.user_updated_at !== undefined) {
+            bodyParser.user_updated_at = body.user_updated_at;
+        }
+        return bodyParser;
     }
 
-    public async getUserByCondition(params: any): Promise<IUser | null> {
-        const condition = this.parseFilter(params);
-        const user = await User.findOne(condition);
-        return user;
-    }
-
-    protected parseFilter(params: any): FindOptions<InferAttributes<User>> {
-
+    public parseFilter(params: IUserFilterParams): FindOptions<InferAttributes<User>> {
         let orQuery = [];
         let andQuery = [];
 
@@ -53,7 +118,10 @@ export default class UserService {
         }
 
         if (params.user_status !== undefined) {
-            andQuery.push({ user_status: params.user_status });
+            Array.isArray(params.user_status) ?
+                andQuery.push({ user_status: { [Op.in]: params.user_status } })
+                :
+                andQuery.push({ user_status: params.user_status });
         }
 
         if (params.user_role_id !== undefined) {
@@ -139,12 +207,12 @@ export default class UserService {
         }
         console.log(params)
         // option attributes
-        let attributes: any | null = null;
+        let attributes: any = { exclude: ['user_password'] };
         if (params.exclude !== undefined) {
             if (Array.isArray(params.exclude)) {
-                attributes.exclude = params.exclude
+                attributes.exclude.concat(params.exclude);
             } else {
-                attributes.exclude = [params.exclude];
+                attributes.exclude.push(params.exclude);
             }
         }
 
@@ -163,7 +231,7 @@ export default class UserService {
         };
         // Thêm các option nếu có
         if (attributes) {
-            if (params.need_password !== undefined) {
+            if (params.need_password !== undefined && params.need_password) {
                 attributes.exclude = attributes.exclude.filter((item: string) => item !== 'user_password');
             } else {
                 if (attributes.exclude.indexOf('user_password') === -1) {
@@ -172,27 +240,28 @@ export default class UserService {
             }
             condition.attributes = attributes;
         }
+        console.log(attributes);
         if (includes) {
             condition.include = includes;
         }
         // Thêm điều kiện order
-        if (params.order !== undefined) {
-            condition.order = params.order;
+        if (params.orderBy !== undefined) {
+            condition.order = params.orderBy;
         } else {
             condition.order = [['user_id', 'ASC']];
         }
+        if (params.limit !== undefined || params.pageSize !== undefined) {
+            condition.limit = params.limit ?? params.pageSize ?? 10;
+        } else {
+            condition.limit = 10;
+        }
         if (params.page !== undefined) {
-            params.offset = (params.page - 1) * params.limit;
+            params.offset = (params.page - 1) * (params?.limit ?? 1);
         }
         if (params.offset !== undefined) {
             condition.offset = params.offset;
         } else {
             condition.offset = 0;
-        }
-        if (params.limit !== undefined) {
-            condition.limit = params.limit;
-        } else {
-            condition.limit = 10;
         }
         return condition;
     }
