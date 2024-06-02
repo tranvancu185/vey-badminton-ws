@@ -8,7 +8,13 @@ import UserService from "../users/user-services";
 import { ILoginResponse } from "@/packages/auth/auth-interfaces";
 import IUser from "@/interfaces/IUser";
 
-export class AuthController extends BaseController<IUser> {
+export class AuthController extends BaseController {
+
+    private userService: UserService;
+    constructor() {
+        super();
+        this.userService = new UserService();
+    }
 
     public async Login(req: Request): Promise<ILoginResponse> {
         const logger = this.createLogger({ fileName: 'login', infoLog: 'LOG-IN', includeDate: true });
@@ -25,9 +31,8 @@ export class AuthController extends BaseController<IUser> {
                 result.message = 'Username and password are required.';
                 return result;
             }
-            const userService = new UserService();
             // 2. Tìm người dùng
-            const user = await userService.getByCondition({ user_email, need_password: true, user_email_fix: true });
+            const user = await this.userService.getByCondition({ user_email, need_password: true, user_email_fix: true });
             if (!user) {
                 return result;
             }

@@ -2,11 +2,15 @@ import { Request } from "express";
 import { IGetListUsersRespone, IUserFilterParams } from "@/packages/users/user-interfaces";
 import BaseController from "@/packages/commons/base-controller";
 // import { Get, Tags } from "tsoa";
-
-import IUser from "@/interfaces/IUser";
 import UserService from "./user-services";
 
-export class UserController extends BaseController<IUser> {
+export class UserController extends BaseController {
+
+    private service: UserService;
+    constructor() {
+        super();
+        this.service = new UserService();
+    }
 
     public async GetListUsers(req: Request): Promise<IGetListUsersRespone> {
         const logger = this.createLogger({ fileName: 'get-list-users', infoLog: 'GET-LIST-USER', includeDate: true });
@@ -17,8 +21,8 @@ export class UserController extends BaseController<IUser> {
         };
         try {
             const params: IUserFilterParams = req.query;
-            const userService = new UserService();
-            const dataUser = await userService.getList(params);
+            const dataUser = await this.service.getList(params);
+            console.log(req.auth)
             result.data = dataUser ?? [];
             result.status = 1;
             result.message = 'Get list ussers successfully!';

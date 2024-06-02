@@ -6,10 +6,8 @@ import IUser from '@/interfaces/IUser';
 
 export default class UserService extends BaseService<User> {
 
-    private userService: BaseService<User>;
     constructor() {
         super(User);
-        this.userService = new BaseService(User);
     }
 
     public parseBody(body: any): IUser {

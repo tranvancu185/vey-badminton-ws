@@ -1,7 +1,7 @@
 import loggerDiscord, { IDiscordLogger } from "@/configs/logger/discord-logger";
 import createLogger, { IProps as ILogger } from "@/configs/logger/logger";
 
-export default class BaseController<T> {
+export default class BaseController {
 
     public formatString() {
         return true;
