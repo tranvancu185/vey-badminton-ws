@@ -1,4 +1,4 @@
-export default interface Customer {
+export default interface ICustomer {
     customer_id: number;
     customer_name: string;
     customer_email?: string;

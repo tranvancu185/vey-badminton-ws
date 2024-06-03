@@ -4,12 +4,13 @@ import User from '@/interfaces/IUser'
 export interface IGetListUsersRespone extends IBaseResponse<User[]> { }
 
 export interface IUserFilterParams extends IBaseFilterParams {
+    user_id?: number;
     user_name?: string;
-    user_name_fix?: boolean;
+    user_name_fix?: number;
     user_email?: string;
-    user_email_fix?: boolean;
+    user_email_fix?: number;
     user_phone?: string;
-    user_phone_fix?: boolean;
+    user_phone_fix?: number;
     user_status?: number | number[];
     user_role_id?: number | number[];
     user_department_id?: number | number[];
@@ -26,5 +27,5 @@ export interface IUserFilterParams extends IBaseFilterParams {
     join_to_date?: number; // Giả sử là timestamp
     delete_from_date?: number; // Giả sử là timestamp
     delete_to_date?: number; // Giả sử là timestamp
-    need_password?: boolean;
+    need_password?: number;
 }

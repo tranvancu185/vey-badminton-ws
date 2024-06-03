@@ -6,54 +6,29 @@ const userRouter: Router = express.Router();
 userRouter.use(authenticateToken);
 // Define your routes
 
-/**
- * @swagger
- * /users:
- *   get:
- *     tags:
- *       - API
- *       - User
- *     description: Returns all users
- */
 userRouter.get('/', async (req: Request, res: Response) => {
     const userController = new UserController();
-    const respone = await userController.GetListUsers(req);
-    res.json(respone)
+    await userController.GetListUsers(req, res);
 });
 
-
-/**
- * @swagger
- * /users/{id}:
- *   get:
- *     tags:
- *       - API
- *       - User
- *     description: Returns a single user
- */
-userRouter.get('/:id', (req: Request, res: Response) => {
-    // Handle GET request for /users/:id
-    const userId = req.params.id;
-    res.json({ id: userId });
+userRouter.get('/:id', async (req: Request, res: Response) => {
+    const userController = new UserController();
+    await userController.GetDetailUser(req, res);
 });
 
-userRouter.post('/create', (req: Request, res: Response) => {
-    // Handle POST request for /users
-    const newUser = req.body;
-    res.send('Create a new user');
+userRouter.post('/create', async (req: Request, res: Response) => {
+    const userController = new UserController();
+    await userController.CreateUser(req, res);
 });
 
-userRouter.put('/:id/edit', (req: Request, res: Response) => {
-    // Handle PUT request for /users/:id
-    const userId = req.params.id;
-    const updatedUser = req.body;
-    res.send(`Update user with ID ${userId}`);
+userRouter.put('/:id/edit', async (req: Request, res: Response) => {
+    const userController = new UserController();
+    await userController.UpdateUser(req, res);
 });
 
-userRouter.delete('/:id/delete', (req: Request, res: Response) => {
-    // Handle DELETE request for /users/:id
-    const userId = req.params.id;
-    res.send(`Delete user with ID ${userId}`);
+userRouter.delete('/:id/delete', async (req: Request, res: Response) => {
+    const userController = new UserController();
+    await userController.DeleteUser(req, res);
 });
 
 // Export the router

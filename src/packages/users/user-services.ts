@@ -91,8 +91,12 @@ export default class UserService extends BaseService<User> {
         let orQuery = [];
         let andQuery = [];
 
+        if (params.user_id !== undefined) {
+            andQuery.push({ user_id: params.user_id });
+        }
+
         if (params.user_name !== undefined) {
-            // Nếu user_name_fix = true thì tìm chính xác, ngược lại tìm theo like
+            // Nếu user_name_fix = 1 thì tìm chính xác, ngược lại tìm theo like
             params.user_name_fix ?
                 andQuery.push({ user_name: params.user_name })
                 :
@@ -100,7 +104,7 @@ export default class UserService extends BaseService<User> {
         }
 
         if (params.user_email !== undefined) {
-            // Nếu user_email_fix = true thì tìm chính xác, ngược lại tìm theo like
+            // Nếu user_email_fix = 1 thì tìm chính xác, ngược lại tìm theo like
             params.user_email_fix ?
                 andQuery.push({ user_email: params.user_email })
                 :
@@ -108,7 +112,7 @@ export default class UserService extends BaseService<User> {
         }
 
         if (params.user_phone !== undefined) {
-            // Nếu user_phone_fix = true thì tìm chính xác, ngược lại tìm theo like
+            // Nếu user_phone_fix = 1 thì tìm chính xác, ngược lại tìm theo like
             params.user_phone_fix ?
                 andQuery.push({ user_phone: params.user_phone })
                 :
@@ -229,8 +233,11 @@ export default class UserService extends BaseService<User> {
         };
         // Thêm các option nếu có
         if (attributes) {
-            if (params.need_password !== undefined && params.need_password) {
-                attributes.exclude = attributes.exclude.filter((item: string) => item !== 'user_password');
+            if (params?.need_password == 1) {
+                const indexNeedPassword = attributes.exclude.indexOf('user_password');
+                if (indexNeedPassword !== -1) {
+                    attributes.exclude.splice(indexNeedPassword, 1);
+                }
             } else {
                 if (attributes.exclude.indexOf('user_password') === -1) {
                     attributes.exclude.push('user_password');
@@ -238,7 +245,7 @@ export default class UserService extends BaseService<User> {
             }
             condition.attributes = attributes;
         }
-        console.log(attributes);
+
         if (includes) {
             condition.include = includes;
         }

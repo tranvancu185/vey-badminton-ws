@@ -2,8 +2,8 @@ import 'module-alias/register';
 import express, { Express, Request, Response } from "express";
 import bodyParser from "body-parser";
 import cors from 'cors';
-import swaggerUI from "swagger-ui-express";
 import morganMiddleware from '@/configs/logger/morganMiddleware'
+import swaggerUI from "swagger-ui-express";
 
 import swaggerFile from '@/configs/swagger/swagger.json';
 import swaggerSpec from "@/configs/swagger/swagger-docs";
@@ -13,11 +13,11 @@ import routes from "@/packages/routes";
 const app: Express = express();
 const PORT = process.env.PORT || 8000;
 
-app.use(
-    "/api/docs",
-    swaggerUI.serve,
-    swaggerUI.setup(swaggerFile)
-);
+// app.use(
+//     "/api/docs",
+//     swaggerUI.serve,
+//     swaggerUI.setup(swaggerFile)
+// );
 
 app.use(cors());
 app.use(bodyParser.urlencoded({

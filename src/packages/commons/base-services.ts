@@ -10,7 +10,7 @@ export default class BaseService<T extends Model> {
         return results;
     }
 
-    public async getById(id: number): Promise<T | null> {
+    public async getById(id: any): Promise<T | null> {
         const result = await this.model.findByPk(id);
         return result;
     }
@@ -19,6 +19,22 @@ export default class BaseService<T extends Model> {
         const condition = this.parseFilter(params);
         const result = await this.model.findOne(condition);
         return result;
+    }
+
+    public async insert(body: any): Promise<T> {
+        const result = await this.model.create(this.parseBody(body));
+        return result;
+    }
+
+    public async updateById(id: any, body: any): Promise<T | null> {
+        const condition = this.parseFilter({ user_id: id });
+        const result = await this.model.update(condition, body);
+        return result ? this.getById(id) : null;
+    }
+
+    public async deleteById(id: any): Promise<boolean> {
+        const result = await this.model.destroy({ where: { user_id: id } });
+        return result > 0;
     }
 
     public parseFilter(params: any): FindOptions<InferAttributes<T>> {

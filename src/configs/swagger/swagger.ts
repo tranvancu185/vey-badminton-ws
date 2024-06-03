@@ -1,6 +1,8 @@
 const swaggerAutogen = require('swagger-autogen');
 
-const UserSchema = require('./schemas/user.schema');
+const ModelsSchema = require('./schemas/models/index.js');
+const ParamsSchema = require('./schemas/params/index.js');
+const ResponsesSchema = require('./schemas/responses/index.js');
 
 const doc = {
     info: {
@@ -13,33 +15,29 @@ const doc = {
     schemes: ['http', 'https'],
     consumes: ['application/json'],
     produces: ['application/json'],
-    // tags: [
-    //     {
-    //         name: "API",
-    //         description: "API"
-    //     },
-    //     {
-    //         name: "User",
-    //         description: "User package"
-    //     },
-    //     {
-    //         name: "Auth",
-    //         description: "Auth package"
-    //     },
-    //     {
-    //         name: "Product",
-    //         description: "Product package"
-    //     },
-    //     {
-    //         name: "Order",
-    //         description: "Order package"
-    //     },
-    //     {
-    //         name: "Customer",
-    //         description: "Customer package"
-    //     }
-    //     // Thêm các tag khác nếu cần
-    // ],
+    tags: [
+        {
+            name: "User",
+            description: "User package"
+        },
+        {
+            name: "Auth",
+            description: "Auth package"
+        },
+        {
+            name: "Product",
+            description: "Product package"
+        },
+        {
+            name: "Order",
+            description: "Order package"
+        },
+        {
+            name: "Customer",
+            description: "Customer package"
+        }
+        // Thêm các tag khác nếu cần
+    ],
     securityDefinitions: {
         bearerAuth: {
             "type": "apiKey",
@@ -49,13 +47,14 @@ const doc = {
         }
     },
     definitions: {
-        // Định nghĩa các schema của bạn ở đây (ví dụ: User, Product, ...)
-        User: UserSchema,
-        // ... các schema khác
+        ...ModelsSchema,
+        ...ParamsSchema,
+        ...ResponsesSchema,
     }
 };
 
 const outputFile = './swagger.json';
 const endpointsFiles = ['./src/server.ts']; // Đường dẫn đến các file định nghĩa route
+// const endpointsFiles = ['./src/packages/*/routes.ts']; // Đường dẫn đến các file định nghĩa route
 
 swaggerAutogen(outputFile, endpointsFiles, doc);

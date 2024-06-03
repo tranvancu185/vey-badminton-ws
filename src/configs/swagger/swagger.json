@@ -9,10 +9,6 @@
   "basePath": "/",
   "tags": [
     {
-      "name": "API",
-      "description": "API"
-    },
-    {
       "name": "User",
       "description": "User package"
     },
@@ -572,6 +568,412 @@
                 "nullable": {
                   "type": "boolean",
                   "example": true
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "UserFilterParams": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string",
+          "example": "object"
+        },
+        "properties": {
+          "type": "object",
+          "properties": {
+            "user_name": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Tên người dùng (có thể tìm kiếm gần đúng nếu user_name_fix = false)"
+                }
+              }
+            },
+            "user_name_fix": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Cho biết có tìm kiếm chính xác tên người dùng hay không (true: chính xác, false: gần đúng)"
+                }
+              }
+            },
+            "user_email": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Email người dùng (có thể tìm kiếm gần đúng nếu user_email_fix = false)"
+                }
+              }
+            },
+            "user_email_fix": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Cho biết có tìm kiếm chính xác email người dùng hay không (true: chính xác, false: gần đúng)"
+                }
+              }
+            },
+            "user_phone": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Số điện thoại người dùng (có thể tìm kiếm gần đúng nếu user_phone_fix = false)"
+                }
+              }
+            },
+            "user_phone_fix": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Cho biết có tìm kiếm chính xác số điện thoại người dùng hay không (true: chính xác, false: gần đúng)"
+                }
+              }
+            },
+            "user_status": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "integer"
+                    }
+                  }
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Trạng thái của người dùng (danh sách các trạng thái)"
+                }
+              }
+            },
+            "user_role_id": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "integer"
+                    }
+                  }
+                },
+                "description": {
+                  "type": "string",
+                  "example": "ID vai trò của người dùng (danh sách các ID vai trò)"
+                }
+              }
+            },
+            "user_department_id": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "integer"
+                    }
+                  }
+                },
+                "description": {
+                  "type": "string",
+                  "example": "ID phòng ban của người dùng (danh sách các ID phòng ban)"
+                }
+              }
+            },
+            "user_position_id": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "integer"
+                    }
+                  }
+                },
+                "description": {
+                  "type": "string",
+                  "example": "ID vị trí của người dùng (danh sách các ID vị trí)"
+                }
+              }
+            },
+            "user_provice_id": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "ID tỉnh/thành phố của người dùng"
+                }
+              }
+            },
+            "user_district_id": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "ID quận/huyện của người dùng"
+                }
+              }
+            },
+            "user_ward_id": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "ID phường/xã của người dùng"
+                }
+              }
+            },
+            "user_code": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "string"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Mã người dùng"
+                }
+              }
+            },
+            "user_config": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Cấu hình người dùng"
+                }
+              }
+            },
+            "user_create_by": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "ID người tạo người dùng"
+                }
+              }
+            },
+            "create_from_date": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Thời gian tạo từ (timestamp)"
+                }
+              }
+            },
+            "create_to_date": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Thời gian tạo đến (timestamp)"
+                }
+              }
+            },
+            "join_from_date": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Thời gian tham gia từ (timestamp)"
+                }
+              }
+            },
+            "join_to_date": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Thời gian tham gia đến (timestamp)"
+                }
+              }
+            },
+            "delete_from_date": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Thời gian xóa từ (timestamp)"
+                }
+              }
+            },
+            "delete_to_date": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "integer"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Thời gian xóa đến (timestamp)"
+                }
+              }
+            },
+            "need_password": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "boolean"
+                },
+                "description": {
+                  "type": "string",
+                  "example": "Cho biết có cần mật khẩu hay không"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "UserFilterResponse": {
+      "type": "object",
+      "properties": {
+        "UserFilterResponse": {
+          "type": "object",
+          "properties": {
+            "type": {
+              "type": "string",
+              "example": "object"
+            },
+            "properties": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "number"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Status code"
+                    }
+                  }
+                },
+                "message": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "string"
+                    },
+                    "description": {
+                      "type": "string",
+                      "example": "Message response"
+                    }
+                  }
+                },
+                "data": {
+                  "type": "object",
+                  "properties": {
+                    "type": {
+                      "type": "string",
+                      "example": "array"
+                    },
+                    "items": {
+                      "$ref": "#/definitions/User"
+                    }
+                  }
                 }
               }
             }
