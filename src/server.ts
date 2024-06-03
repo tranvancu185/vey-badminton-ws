@@ -5,9 +5,10 @@ import cors from 'cors';
 import swaggerUI from "swagger-ui-express";
 import morganMiddleware from '@/configs/logger/morganMiddleware'
 
+import swaggerFile from '@/configs/swagger/swagger.json';
 import swaggerSpec from "@/configs/swagger/swagger-docs";
 import routes from "@/packages/routes";
-import connectDB from '@/configs/db/mongodb';
+// import connectDB from '@/configs/db/mongodb';
 
 const app: Express = express();
 const PORT = process.env.PORT || 8000;
@@ -15,10 +16,9 @@ const PORT = process.env.PORT || 8000;
 app.use(
     "/api/docs",
     swaggerUI.serve,
-    swaggerUI.setup(swaggerSpec, {
-        explorer: true,
-    })
+    swaggerUI.setup(swaggerFile)
 );
+
 app.use(cors());
 app.use(bodyParser.urlencoded({
     extended: true,

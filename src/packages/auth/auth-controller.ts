@@ -70,5 +70,67 @@ export class AuthController extends BaseController {
 
         return result;
     }
+
+    // Add a new method to handle refresh token requests
+    public async RefreshToken(req: Request): Promise<ILoginResponse> {
+        const logger = this.createLogger({ fileName: 'refresh-token', infoLog: 'REFRESH-TOKEN', includeDate: true });
+        const result: ILoginResponse = {
+            status: 0,
+            message: 'Invalid refresh token!',
+            data: null
+        };
+
+        try {
+            const refreshToken = req.body.refreshToken;
+            if (!refreshToken) {
+                result.message = 'Refresh token is required.';
+                return result;
+            }
+
+            try {
+                // const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET!);
+                const user_id = req.auth?.user_id;
+                // const user_id = decoded?.user_id;
+
+                // Check if refresh token is valid for the user
+                const user = await this.userService.getById(user_id);
+                if (!user) {
+                    result.message = 'Invalid refresh token.';
+                    return result;
+                }
+
+                // Generate new JWT and refresh token
+                const newTokenPayload = {
+                    user_id: user.user_id,
+                    user_name: user.user_name,
+                    user_email: user.user_email
+                };
+                const newToken = jwt.sign(newTokenPayload, process.env.JWT_SECRET!, { expiresIn: '1h' });
+                const newRefreshToken = jwt.sign(newTokenPayload, process.env.JWT_REFRESH_SECRET!, { expiresIn: '7d' });
+
+                // Update refresh token in database or storage (optional)
+                // await this.userService.storeRefreshToken(user.user_id, newRefreshToken);
+
+                result.status = 1;
+                result.message = 'Refresh token success!';
+                result.data = {
+                    token: newToken,
+                    refreshToken: newRefreshToken,
+                    expiresIn: 3600,
+                    user_id: user.user_id
+                };
+            } catch (error) {
+                const err = error as Error;
+                logger.error(JSON.stringify({ error: { name: err.name, message: err.message, stack: err.stack, }, params: req.body, description: 'Refresh token failed!' }));
+                result.message = 'Invalid refresh token.';
+            }
+        } catch (error) {
+            const err = error as Error;
+            logger.error(JSON.stringify({ error: { name: err.name, message: err.message, stack: err.stack, }, params: req.body, description: 'Refresh token failed!' }));
+            result.message = 'Internal server error!';
+        }
+
+        return result;
+    }
 }
 
