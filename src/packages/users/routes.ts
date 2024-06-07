@@ -13,7 +13,7 @@ userRouter.get('/', checkPermission(['users_list']), validationMiddleware(filter
     await userController.GetListUsers(req, res, next);
 });
 
-userRouter.get('/:id', checkPermission(['user_view']), async (req: Request, res: Response, next: NextFunction) => {
+userRouter.get('/:id', checkPermission(['users_view']), async (req: Request, res: Response, next: NextFunction) => {
     const userController = new UserController();
     await userController.GetDetailUser(req, res, next);
 });
