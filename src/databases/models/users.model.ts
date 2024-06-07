@@ -28,7 +28,7 @@ export interface UserAttributes {
     user_deleted_at?: number; // Cho phép null
     user_created_at?: number; // Cho phép null
     user_updated_at?: number; // Cho phép null
-    user_permissions?: Permission[];
+    permissions?: Permission[] | string[];
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'user_id'> { } // Loại trừ 'user_id' khi tạo mới
@@ -59,7 +59,7 @@ class User extends Model<UserAttributes, UserCreationAttributes> implements User
     public user_deleted_at!: number;
     public user_created_at!: number;
     public user_updated_at!: number;
-    public user_permissions!: Permission[];
+    public permissions!: Permission[] | string[];
 
     // Các phương thức của Model
     // timestamps!

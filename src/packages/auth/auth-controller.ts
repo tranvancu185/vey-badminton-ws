@@ -31,6 +31,7 @@ export class AuthController extends BaseController {
             }
             // 2. Tìm người dùng
             const user = await this.userService.getByCondition({ user_email, need_password: true, user_email_fix: true, includes: 'permission' });
+            // const user = await this.userService.getByCondition({ user_email, need_password: true, user_email_fix: true });
             if (!user) {
                 return result;
             }
@@ -41,6 +42,7 @@ export class AuthController extends BaseController {
                 return result;
             }
 
+            console.log(user.permissions);
             // 4. Tạo JWT
             const tokenPayload = {
                 user_id: user.user_id,
@@ -50,7 +52,7 @@ export class AuthController extends BaseController {
                 user_role_id: user.user_role_id,
                 user_position_id: user.user_position_id,
                 user_code: user.user_code,
-                permission: user.user_permissions.map(p => p.permission_code),
+                // permission: user.user_permissions.map(p => p.permission_code),
             };
             const token = jwt.sign(tokenPayload, process.env.JWT_SECRET!, { expiresIn: '1h' });
 

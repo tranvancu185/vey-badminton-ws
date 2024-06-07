@@ -1,15 +1,14 @@
 import { Sequelize } from '../index';
 import User from '../users.model';
 import Permission from '../permissions.model';
-import Role
-  from '../roles.model';
+import Role from '../roles.model';
 export default function createAssociations(sequelize: Sequelize) {
   // User - Permission (Many-to-Many)
   User.belongsToMany(Permission, {
     through: 'user_permissions', // Tên bảng trung gian
     foreignKey: 'user_id',       // Khóa ngoại trong bảng user_permissions liên kết với user
     otherKey: 'permission_id',  // Khóa ngoại trong bảng user_permissions liên kết với permission
-    as: 'user_permissions'
+    as: 'permissions'
   });
 
   Permission.belongsToMany(User, {

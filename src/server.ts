@@ -5,9 +5,12 @@ import cors from 'cors';
 import morganMiddleware from '@/configs/logger/morganMiddleware'
 import swaggerUI from "swagger-ui-express";
 
+import { sequelize } from './databases/models';
+
 import swaggerFile from '@/configs/swagger/swagger.json';
 import swaggerSpec from "@/configs/swagger/swagger-docs";
 import routes from "@/packages/routes";
+import createAssociations from './databases/models/associations/associations';
 // import connectDB from '@/configs/db/mongodb';
 
 const app: Express = express();
@@ -18,6 +21,7 @@ const PORT = process.env.PORT || 8000;
 //     swaggerUI.serve,
 //     swaggerUI.setup(swaggerFile)
 // );
+
 
 app.use(cors());
 app.use(bodyParser.urlencoded({
@@ -34,8 +38,20 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Hello, World!');
 });
 
+// Kiểm tra kết nối và tạo associations sau khi kết nối thành công
+
 
 // connectDB(); // Kết nối đến MongoDB
 app.listen(PORT, async () => {
+    sequelize
+        .authenticate()
+        .then(() => {
+            console.log('Connection has been established successfully.');
+            // Đồng bộ models với database (chỉ cần chạy một lần)
+            createAssociations(sequelize);
+        })
+        .catch(err => {
+            console.error('Unable to connect to the database:', err);
+        });
     console.log(`Server is running on port ${PORT}\n URL: http://localhost:${PORT}`);
 });

@@ -251,7 +251,7 @@ export default class UserService extends BaseService<User> {
         }
 
         if (includes) {
-            condition.include = this.parseIncludeModel(includes);
+            condition.include = Permission;
         }
         // Thêm điều kiện order
         if (params.orderBy !== undefined) {
