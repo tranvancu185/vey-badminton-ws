@@ -33,6 +33,31 @@ export interface UserAttributes {
 interface UserCreationAttributes extends Optional<UserAttributes, 'user_id'> { } // Loại trừ 'user_id' khi tạo mới
 
 class User extends Model<UserAttributes, UserCreationAttributes> implements UserAttributes {
+
+    protected readonly primaryKey: string = 'user_id';
+
+    protected readonly STATUS_USER = {
+        STATUS_INACTIVE: 0,
+        STATUS_ACTIVE: 1,
+        STATUS_DELETED: 2
+    };
+
+    protected readonly CONFIG_USER = {
+        CONFIG_BLACK_LIST: 1,
+        CONFIG_WHITE_LIST: 2
+    };
+
+    protected readonly MAPPING_STATUS_USER = {
+        [this.STATUS_USER.STATUS_INACTIVE]: 'Inactive',
+        [this.STATUS_USER.STATUS_ACTIVE]: 'Active',
+        [this.STATUS_USER.STATUS_DELETED]: 'Deleted'
+    };
+
+    protected readonly MAPPING_CONFIG_USER = {
+        [this.CONFIG_USER.CONFIG_BLACK_LIST]: 'Black List',
+        [this.CONFIG_USER.CONFIG_WHITE_LIST]: 'White List'
+    };
+
     public user_id!: number;
     public user_name!: string;
     public user_email!: string;

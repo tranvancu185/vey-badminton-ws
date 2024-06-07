@@ -23,11 +23,13 @@ export default function createAssociations(sequelize: Sequelize) {
 
     // User - Role (One-to-One)
     User.hasOne(Role, {
-      foreignKey: 'user_id', // Khóa ngoại trong bảng Role liên kết với User
+      foreignKey: 'role_id', // Khóa ngoại user_id trong bảng roles
+      as: 'role', // Tên quan hệ trong bảng User
     });
     Role.belongsTo(User, {
-      foreignKey: 'user_id',
+      foreignKey: 'user_role_id',
     });
+
   } catch (error) {
     console.error('Error creating associations:', error);
   }

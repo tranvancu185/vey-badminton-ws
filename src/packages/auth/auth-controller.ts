@@ -53,7 +53,6 @@ export class AuthController extends BaseController {
                 user_role_id: user?.user_role_id,
                 user_position_id: user?.user_position_id,
                 user_code: user?.user_code,
-                permissions: user?.permissions.map(p => p.permission_code),
             };
             const token = jwt.sign(tokenPayload, process.env.JWT_SECRET!, { expiresIn: '1h' });
 

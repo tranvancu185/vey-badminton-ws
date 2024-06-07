@@ -7,7 +7,7 @@ import Role from '@/databases/models/roles.model';
 import { IUserFilterParams } from './user-interfaces';
 import BaseService from '../commons/base-services';
 import IUser from './user-interfaces';
-
+import CONSTANTS from "@/utils/constants"
 export default class UserService extends BaseService<User> {
 
     constructor() {
@@ -280,17 +280,17 @@ export default class UserService extends BaseService<User> {
         const modelNames: any[] = [];
         includes.forEach(include => {
             switch (include) {
-                case 'permission':
+                case CONSTANTS.KEY_INCLUDE_USER.PERMISSION:
                     modelNames.push({
                         model: Permission,
                         as: 'permissions',
                         attributes: ['permission_code']
                     });
                     break;
-                case 'role':
-                    modelNames.push({ model: Role, as: 'role' });
+                case CONSTANTS.KEY_INCLUDE_USER.ROLE:
+                    modelNames.push({ model: Role, as: 'role', attributes: ['role_id', 'role_name', 'role_code'] });
                     break;
-                case 'user':
+                case CONSTANTS.KEY_INCLUDE_USER.USER:
                     modelNames.push({ model: User, as: 'create_user' });
                     break;
                 default:

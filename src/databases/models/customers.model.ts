@@ -30,6 +30,29 @@ interface CustomerAttributes {
 interface CustomerCreationAttributes extends Optional<CustomerAttributes, 'customer_id'> { }
 
 class Customer extends Model<CustomerAttributes, CustomerCreationAttributes> implements CustomerAttributes {
+
+    protected readonly STATUS_CUSTOMER = {
+        STATUS_INACTIVE: 0,
+        STATUS_ACTIVE: 1,
+        STATUS_DELETED: 2
+    };
+
+    protected readonly CONFIG_CUSTOMER = {
+        CONFIG_BLACK_LIST: 1,
+        CONFIG_WHITE_LIST: 2
+    };
+
+    protected readonly MAPPING_STATUS_CUSTOMER = {
+        [this.STATUS_CUSTOMER.STATUS_INACTIVE]: 'Inactive',
+        [this.STATUS_CUSTOMER.STATUS_ACTIVE]: 'Active',
+        [this.STATUS_CUSTOMER.STATUS_DELETED]: 'Deleted'
+    };
+
+    protected readonly MAPPING_CONFIG_CUSTOMER = {
+        [this.CONFIG_CUSTOMER.CONFIG_BLACK_LIST]: 'Black List',
+        [this.CONFIG_CUSTOMER.CONFIG_WHITE_LIST]: 'White List'
+    };
+
     public customer_id!: number;
     public customer_name!: string;
     public customer_email!: string; // Lưu ý: Không còn optional vì đã có giá trị mặc định

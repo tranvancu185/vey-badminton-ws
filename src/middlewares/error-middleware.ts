@@ -3,7 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 import AppError from '@/utils/appError'; // Đường dẫn đến AppError.ts
 import commonMessage from '@/utils/message/common.message';
 
-const errorMiddleware = (err: any, req: Request, res: Response, next: NextFunction) => {
+const errorMiddleware = (err: any, _: Request, res: Response, next: NextFunction) => {
     let error: AppError = err;
 
     if (!(err instanceof AppError)) {
