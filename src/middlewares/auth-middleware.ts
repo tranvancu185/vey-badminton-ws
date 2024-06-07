@@ -1,7 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-// import '@/types';
 import jwt from 'jsonwebtoken';
-import IUser from '@/interfaces/IUser';
 
 const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers.authorization;
@@ -18,7 +16,8 @@ const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
             }
             return res.status(403).json({ error: 'Unauthorized' });
         }
-        req.auth = user as IUser;
+        console.log(user)
+        req.auth = user;
         next();
     });
 };

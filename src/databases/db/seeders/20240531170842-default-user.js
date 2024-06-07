@@ -22,10 +22,10 @@ module.exports = {
       user_avatar: 'default.jpg',
       user_phone: process.env.ADMIN_PHONE || '0965135278',
       user_code: 'ADMIN',
-      user_status: 1, 
-      user_birthday: null, 
+      user_status: 1,
+      user_birthday: null,
       user_description: 'Administrator',
-      user_properties: JSON.stringify({}), 
+      user_properties: JSON.stringify({}),
       user_config: 0,
       user_password: hashedPassword,
       user_role_id: 1, // Giả sử 1 là role của admin

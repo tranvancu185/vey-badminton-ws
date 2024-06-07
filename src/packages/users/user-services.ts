@@ -1,8 +1,12 @@
 import { Op, FindOptions, InferAttributes } from 'sequelize';
-import User from "@/databases/models/users";
+
+import User from "@/databases/models/users.model";
+import Permission from '@/databases/models/permissions.model';
+import Role from '@/databases/models/roles.model';
+
 import { IUserFilterParams } from './user-interfaces';
 import BaseService from '../commons/base-services';
-import IUser from '@/interfaces/IUser';
+import IUser from './user-interfaces';
 
 export default class UserService extends BaseService<User> {
 
@@ -247,7 +251,7 @@ export default class UserService extends BaseService<User> {
         }
 
         if (includes) {
-            condition.include = includes;
+            condition.include = this.parseIncludeModel(includes);
         }
         // Thêm điều kiện order
         if (params.orderBy !== undefined) {
@@ -269,5 +273,26 @@ export default class UserService extends BaseService<User> {
             condition.offset = 0;
         }
         return condition;
+    }
+
+    protected parseIncludeModel(includes: string[]) {
+        const modelNames: any[] = [];
+        includes.forEach(include => {
+            switch (include) {
+                case 'permission':
+                    modelNames.push(Permission);
+                    break;
+                case 'role':
+                    modelNames.push(Role);
+                    break;
+                case 'user':
+                    modelNames.push(User);
+                    break;
+                default:
+                    break;
+            }
+        });
+
+        return modelNames;
     }
 } 

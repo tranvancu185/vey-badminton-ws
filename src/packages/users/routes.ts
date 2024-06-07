@@ -1,12 +1,14 @@
 import express, { Router, Request, Response } from 'express';
 import { UserController } from './user-controller';
 import authenticateToken from '@/middlewares/auth-middleware';
+import validationMiddleware from '@/middlewares/validation-middleware';
+import { filterSchema } from '@/validations/user.schema';
 // Create a new router instance
 const userRouter: Router = express.Router();
 userRouter.use(authenticateToken);
 // Define your routes
 
-userRouter.get('/', async (req: Request, res: Response) => {
+userRouter.get('/', validationMiddleware(filterSchema), async (req: Request, res: Response) => {
     const userController = new UserController();
     await userController.GetListUsers(req, res);
 });

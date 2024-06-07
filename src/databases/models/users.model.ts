@@ -1,5 +1,6 @@
 import { DataTypes, Model, Optional } from 'sequelize';
-import { Sequelize, sequelize } from './index'; // Import sequelize instance của bạn
+import { sequelize } from './index'; // Import sequelize instance của bạn
+import Permission from './permissions.model';
 
 export interface UserAttributes {
     user_id: number;
@@ -27,6 +28,7 @@ export interface UserAttributes {
     user_deleted_at?: number; // Cho phép null
     user_created_at?: number; // Cho phép null
     user_updated_at?: number; // Cho phép null
+    user_permissions?: Permission[];
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'user_id'> { } // Loại trừ 'user_id' khi tạo mới
@@ -57,7 +59,9 @@ class User extends Model<UserAttributes, UserCreationAttributes> implements User
     public user_deleted_at!: number;
     public user_created_at!: number;
     public user_updated_at!: number;
+    public user_permissions!: Permission[];
 
+    // Các phương thức của Model
     // timestamps!
     public readonly createdAt!: Date;
     public readonly updatedAt!: Date;

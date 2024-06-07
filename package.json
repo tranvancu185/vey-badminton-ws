@@ -8,7 +8,7 @@
     "swagger:generate": "node ./src/configs/swagger/swagger.ts",
     "start": "node -r ts-node/register ./src/server.ts",
     "dev": "nodemon",
-    "db:migration": "sequelize-cli db:migrate",
+    "db:migrate": "sequelize-cli db:migrate",
     "db:seed": "sequelize-cli db:seed:all --debug",
     "db:ms": "npm run db:migrate && npm run db:seed"
   },

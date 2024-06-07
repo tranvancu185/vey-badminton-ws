@@ -6,8 +6,6 @@ import jwt from 'jsonwebtoken';
 
 import UserService from "../users/user-services";
 import { ILoginResponse } from "@/packages/auth/auth-interfaces";
-import IUser from "@/interfaces/IUser";
-
 export class AuthController extends BaseController {
 
     private userService: UserService;
@@ -32,7 +30,7 @@ export class AuthController extends BaseController {
                 return result;
             }
             // 2. Tìm người dùng
-            const user = await this.userService.getByCondition({ user_email, need_password: true, user_email_fix: true });
+            const user = await this.userService.getByCondition({ user_email, need_password: true, user_email_fix: true, includes: 'permission' });
             if (!user) {
                 return result;
             }
@@ -47,7 +45,12 @@ export class AuthController extends BaseController {
             const tokenPayload = {
                 user_id: user.user_id,
                 user_name: user.user_name,
-                user_email: user.user_email
+                user_email: user.user_email,
+                user_status: user.user_status,
+                user_role_id: user.user_role_id,
+                user_position_id: user.user_position_id,
+                user_code: user.user_code,
+                permission: user.user_permissions.map(p => p.permission_code),
             };
             const token = jwt.sign(tokenPayload, process.env.JWT_SECRET!, { expiresIn: '1h' });
 

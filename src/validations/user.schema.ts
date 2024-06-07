@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-const FilterParams = z.object({
+export const filterSchema = z.object({
     user_id: z.number().optional(),
     user_name: z.string().optional(),
     user_email: z.string().optional(),
