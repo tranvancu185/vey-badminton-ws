@@ -1,4 +1,4 @@
-import DiscordLogger from './discord';
+import DiscordLogger from '../configs/logger/discord';
 import os from 'os';
 
 const DISCORD_WEBHOOK_DOMAIN_V1 = process.env.DISCORD_WEBHOOK_DOMAIN_V1 || 'https://discord.com/api/webhooks';

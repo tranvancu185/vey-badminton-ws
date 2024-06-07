@@ -1,10 +1,17 @@
-import loggerDiscord, { IDiscordLogger } from "@/configs/logger/discord-logger";
-import createLogger, { IProps as ILogger } from "@/configs/logger/logger";
+import loggerDiscord, { IDiscordLogger } from "@/utils/discord-logger";
+import createLogger, { IProps as ILogger } from "@/utils/logger";
+import AppError from "@/utils/appError";
+import CONSTANT from "@/utils/constants"
 
 export default class BaseController {
+    protected CONSTANTS = CONSTANT;
 
     public formatString() {
         return true;
+    }
+
+    public appError({ message, message_code, statusCode }: { message: string, message_code: string, statusCode: number }) {
+        return new AppError(message, statusCode, message_code);
     }
 
     public createLogger({ fileName, infoLog, includeDate }: ILogger) {

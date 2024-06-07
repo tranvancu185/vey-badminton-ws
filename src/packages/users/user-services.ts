@@ -211,7 +211,7 @@ export default class UserService extends BaseService<User> {
         if (andQuery.length !== 0) {
             whereQuery[Op.and] = andQuery;
         }
-        console.log(params)
+
         // option attributes
         let attributes: any = { exclude: ['user_password'] };
         if (params.exclude !== undefined) {
@@ -233,7 +233,7 @@ export default class UserService extends BaseService<User> {
 
         // Tạo điều kiện tìm kiếm
         const condition: FindOptions<InferAttributes<User>> = {
-            where: whereQuery
+            where: whereQuery,
         };
         // Thêm các option nếu có
         if (attributes) {
@@ -251,7 +251,8 @@ export default class UserService extends BaseService<User> {
         }
 
         if (includes) {
-            condition.include = Permission;
+            const includeModel = this.parseIncludeModel(includes);
+            condition.include = includeModel;
         }
         // Thêm điều kiện order
         if (params.orderBy !== undefined) {
@@ -280,19 +281,22 @@ export default class UserService extends BaseService<User> {
         includes.forEach(include => {
             switch (include) {
                 case 'permission':
-                    modelNames.push(Permission);
+                    modelNames.push({
+                        model: Permission,
+                        as: 'permissions',
+                        attributes: ['permission_code']
+                    });
                     break;
                 case 'role':
-                    modelNames.push(Role);
+                    modelNames.push({ model: Role, as: 'role' });
                     break;
                 case 'user':
-                    modelNames.push(User);
+                    modelNames.push({ model: User, as: 'create_user' });
                     break;
                 default:
                     break;
             }
         });
-
         return modelNames;
     }
 } 

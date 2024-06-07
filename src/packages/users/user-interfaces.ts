@@ -55,5 +55,4 @@ export default interface IUser {
     user_deleted_at?: number; // Cho phép null
     user_created_at?: number; // Cho phép null
     user_updated_at?: number; // Cho phép null
-    user_permissions?: string[];
 }

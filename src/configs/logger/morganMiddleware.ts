@@ -1,5 +1,5 @@
 import morgan, { StreamOptions } from "morgan";
-import createLogger from "@/configs/logger/logger";
+import createLogger from "@/utils/logger";
 
 const logger = createLogger({ fileName: 'tracing-access', infoLog: 'morgan', includeDate: true });
 // Override the stream method by telling

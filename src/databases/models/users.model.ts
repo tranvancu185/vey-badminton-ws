@@ -1,18 +1,17 @@
 import { DataTypes, Model, Optional } from 'sequelize';
 import { sequelize } from './index'; // Import sequelize instance của bạn
-import Permission from './permissions.model';
-
+import { PermissionAttributes } from './permissions.model';
 export interface UserAttributes {
     user_id: number;
     user_name: string;
-    user_email?: string;  // Cho phép null
+    user_email: string;  // Cho phép null
     user_avatar: string;
     user_phone: string;
     user_full_address?: string;
     user_detail_address?: string;
-    user_provice_id?: string;
-    user_district_id?: string;
-    user_ward_id?: string;
+    user_provice_id?: number;
+    user_district_id?: number;
+    user_ward_id?: number;
     user_code: string;
     user_status?: number; // Cho phép null
     user_birthday?: number; // Cho phép null
@@ -28,7 +27,7 @@ export interface UserAttributes {
     user_deleted_at?: number; // Cho phép null
     user_created_at?: number; // Cho phép null
     user_updated_at?: number; // Cho phép null
-    permissions?: Permission[] | string[];
+    permissions?: PermissionAttributes[];
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'user_id'> { } // Loại trừ 'user_id' khi tạo mới
@@ -41,30 +40,25 @@ class User extends Model<UserAttributes, UserCreationAttributes> implements User
     public user_phone!: string;
     public user_full_address!: string;
     public user_detail_address!: string;
-    public user_provice_id!: string;
-    public user_district_id!: string;
-    public user_ward_id!: string;
+    public user_provice_id!: number;
+    public user_district_id!: number;
+    public user_ward_id!: number;
     public user_code!: string;
-    public user_status!: number;
+    public user_status?: number;
     public user_birthday!: number;
     public user_description!: string;
     public user_properties!: string;
     public user_config!: number;
     public user_password!: string;
-    public user_role_id!: number;
-    public user_department_id!: number;
-    public user_position_id!: number;
-    public user_create_by!: number;
+    public user_role_id?: number;
+    public user_department_id?: number;
+    public user_position_id?: number;
+    public user_create_by?: number;
     public user_join_date!: number;
     public user_deleted_at!: number;
     public user_created_at!: number;
     public user_updated_at!: number;
-    public permissions!: Permission[] | string[];
-
-    // Các phương thức của Model
-    // timestamps!
-    public readonly createdAt!: Date;
-    public readonly updatedAt!: Date;
+    public permissions!: PermissionAttributes[];
 }
 
 User.init(
@@ -132,7 +126,7 @@ User.init(
             defaultValue: 0, // 0: inactive, 1: active, 2: deleted
         },
         user_birthday: {
-            type: DataTypes.INTEGER, // Lưu trữ timestamp (số giây)
+            type: DataTypes.DATE, // Lưu trữ timestamp (số giây)
             allowNull: true,
         },
         user_description: {
@@ -140,8 +134,15 @@ User.init(
             allowNull: true,
         },
         user_properties: {
-            type: DataTypes.JSON, // Hoặc DataTypes.STRING nếu bạn muốn lưu trữ dưới dạng JSON string
+            type: DataTypes.STRING,
             allowNull: true,
+            get() {
+                const rawValue = this.getDataValue('user_properties');
+                return rawValue ? JSON.parse(rawValue) : null;
+            },
+            set(value) {
+                this.setDataValue('user_properties', value ? JSON.stringify(value) : undefined);
+            }
         },
         user_config: {
             type: DataTypes.INTEGER, // Lưu trữ giá trị bitwise
@@ -170,19 +171,19 @@ User.init(
             allowNull: true,
         },
         user_join_date: {
-            type: DataTypes.INTEGER, // Lưu trữ timestamp (số giây)
+            type: DataTypes.DATE, // Lưu trữ timestamp (số giây)
             allowNull: true,
         },
         user_deleted_at: {
-            type: DataTypes.INTEGER, // Lưu trữ timestamp (số giây)
+            type: DataTypes.DATE, // Lưu trữ timestamp (số giây)
             allowNull: true,
         },
         user_created_at: {
-            type: DataTypes.INTEGER, // Lưu trữ timestamp (số giây)
+            type: DataTypes.DATE, // Lưu trữ timestamp (số giây)
             allowNull: true,
         },
         user_updated_at: {
-            type: DataTypes.INTEGER, // Lưu trữ timestamp (số giây)
+            type: DataTypes.DATE, // Lưu trữ timestamp (số giây)
             allowNull: true,
         },
     },
@@ -190,8 +191,7 @@ User.init(
         sequelize,
         modelName: 'User',
         tableName: 'users', // Tên bảng trong cơ sở dữ liệu (nếu khác với tên model)
-        createdAt: 'user_created_at', // Đổi tên trường createdAt
-        updatedAt: 'user_updated_at', // Đổi tên trường updatedAt
+        timestamps: false
     }
 );
 

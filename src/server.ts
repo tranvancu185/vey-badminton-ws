@@ -1,3 +1,4 @@
+require("dotenv").config();
 import 'module-alias/register';
 import express, { Express, Request, Response } from "express";
 import bodyParser from "body-parser";
@@ -11,6 +12,7 @@ import swaggerFile from '@/configs/swagger/swagger.json';
 import swaggerSpec from "@/configs/swagger/swagger-docs";
 import routes from "@/packages/routes";
 import createAssociations from './databases/models/associations/associations';
+import errorMiddleware from './middlewares/error-middleware';
 // import connectDB from '@/configs/db/mongodb';
 
 const app: Express = express();
@@ -38,8 +40,8 @@ app.get('/', (req: Request, res: Response) => {
     res.send('Hello, World!');
 });
 
-// Kiểm tra kết nối và tạo associations sau khi kết nối thành công
-
+// Middleware handle error.
+app.use(errorMiddleware);
 
 // connectDB(); // Kết nối đến MongoDB
 app.listen(PORT, async () => {

@@ -1,37 +1,36 @@
-import express, { Router, Request, Response } from 'express';
+import express, { Router, Request, Response, NextFunction } from 'express';
 import { CustomerController } from './customer-controller';
-import authenticateToken from '@/middlewares/auth-middleware';
+
 // Create a new router instance
 const customerRouter: Router = express.Router();
-customerRouter.use(authenticateToken);
 // Define your routes
 
-customerRouter.get('/', async (req: Request, res: Response) => {
+customerRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     const customerController = new CustomerController();
-    await customerController.GetListCustomers(req, res);
+    await customerController.GetListCustomers(req, res, next);
 });
 
-customerRouter.get('/:id', async (req: Request, res: Response) => {
+customerRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
     const customerController = new CustomerController();
-    await customerController.GetDetailCustomer(req, res);
+    await customerController.GetDetailCustomer(req, res, next);
 });
 
-customerRouter.post('/create', async (req: Request, res: Response) => {
+customerRouter.post('/create', async (req: Request, res: Response, next: NextFunction) => {
     // Handle POST request for /users
     const customerController = new CustomerController();
-    await customerController.CreateCustomer(req, res);
+    await customerController.CreateCustomer(req, res, next);
 });
 
-customerRouter.put('/:id/edit', async (req: Request, res: Response) => {
+customerRouter.put('/:id/edit', async (req: Request, res: Response, next: NextFunction) => {
     // Handle PUT request for /users/:id
     const customerController = new CustomerController();
-    await customerController.UpdateCustomer(req, res);
+    await customerController.UpdateCustomer(req, res, next);
 });
 
-customerRouter.delete('/:id/delete', async (req: Request, res: Response) => {
+customerRouter.delete('/:id/delete', async (req: Request, res: Response, next: NextFunction) => {
     // Handle DELETE request for /users/:id
     const customerController = new CustomerController();
-    await customerController.DeleteCustomer(req, res);
+    await customerController.DeleteCustomer(req, res, next);
 });
 
 // Export the router

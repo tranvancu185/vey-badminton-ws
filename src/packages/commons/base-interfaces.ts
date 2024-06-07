@@ -1,6 +1,7 @@
 export interface IBaseResponse<T> {
     status: number;
     message: string;
+    message_code?: string;
     data: T | null;
 }
 

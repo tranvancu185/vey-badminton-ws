@@ -163,8 +163,7 @@ Customer.init(
         sequelize,
         modelName: 'Customer',
         tableName: 'customers', // Tên bảng trong cơ sở dữ liệu
-        createdAt: 'user_created_at', // Đổi tên trường createdAt
-        updatedAt: 'user_updated_at', // Đổi tên trường updatedAt
+        timestamps: false
     }
 );
 

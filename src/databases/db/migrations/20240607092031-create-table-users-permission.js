@@ -22,9 +22,6 @@ module.exports = {
       permission_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-      },
-      created_at: {
-        type: Sequelize.STRING
       }
     });
   },

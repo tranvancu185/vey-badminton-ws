@@ -1,17 +1,18 @@
-import express, { Router, Request, Response } from 'express';
+import express, { Router, Request, Response, NextFunction } from 'express';
 import { AuthController } from './auth-controller';
-import { ILoginResponse } from './auth-interfaces';
-import validationMiddleware from '@/middlewares/validation-middleware';
 
-import { loginSchema } from '@/validations/auth.schema';
 // Create a new router instance
 const authRouter: Router = express.Router();
-const authController = new AuthController();
 
-authRouter.post('/login', async (req: Request, res: Response) => {
-    const respone: ILoginResponse = await authController.Login(req);
-    res.json(respone)
+authRouter.post('/login', async (req: Request, res: Response, next: NextFunction) => {
+    const authController = new AuthController();
+    await authController.Login(req, res, next);
 });
+
+authRouter.get('/logout', async (_: Request, res: Response) => {
+    const authController = new AuthController();
+    await authController.Logout(res);
+})
 
 // Export the router
 export default authRouter;

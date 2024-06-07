@@ -23,7 +23,7 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: quytp # Thay đổi mật khẩu của bạn
-      MYSQL_DATABASE: vey-badminton
+      MYSQL_DATABASE: ume
       MYSQL_USER: quytp
       MYSQL_PASSWORD: quytp
     ports:
@@ -62,7 +62,7 @@ services:
   #       hard: -1
   #   volumes:
   #     - elasticsearch_data:/usr/share/elasticsearch/data
-# volumes:
-#   mariadb_data:
+volumes:
+  mariadb_data:
 #   mongodb_data:
 #   elasticsearch_data:
