@@ -1,15 +1,36 @@
-import { Request, Response, NextFunction } from "express";
-import { IUserFilterParams } from "@/packages/users/user-interfaces";
+import { NextFunction, Request, Response } from "express";
+
 import BaseController from "@/packages/commons/base-controller";
-// import { Get, Tags } from "tsoa";
+import { IUserFilterParams } from "@/packages/users/user-interfaces";
 import UserService from "@/packages/users/user-services";
 import usersMessage from "@/utils/message/users.message";
+
+// import { Get, Tags } from "tsoa";
+
+
 export class ProfileController extends BaseController {
 
     private service: UserService;
     constructor() {
         super();
         this.service = new UserService();
+    }
+
+    public async GetProfile(req: Request, res: Response, next: NextFunction) {
+        const logger = this.createLogger({});
+        try {
+            const profile = req.auth ?? null;
+            const ip = req.ip;
+            res.status(200).json({
+                ...usersMessage.GET_USER_SUCCESS, status: 1, data: {
+                    ...profile,
+                    ip
+                }
+            })
+        } catch (error) {
+            logger.error(`GET USER FAILED: ${error}`);
+            next(error);
+        }
     }
 
     public async GetDetailUser(req: Request, res: Response, next: NextFunction) {
