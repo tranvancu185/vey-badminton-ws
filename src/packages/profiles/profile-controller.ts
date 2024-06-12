@@ -27,7 +27,7 @@ export class ProfileController extends BaseController {
             const ip = req.ip;
             res.status(200).json({
                 ...usersMessage.GET_USER_SUCCESS, status: 1, data: {
-                    profile: profile,
+                    ...profile,
                     ip
                 }
             })
