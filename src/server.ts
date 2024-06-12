@@ -1,18 +1,20 @@
 require("dotenv").config();
+
 import 'module-alias/register';
+
 import express, { Express, Request, Response } from "express";
+
 import bodyParser from "body-parser";
 import cors from 'cors';
-import morganMiddleware from '@/configs/logger/morganMiddleware'
-import swaggerUI from "swagger-ui-express";
-
-import { sequelize } from './databases/models';
-
-import swaggerFile from '@/configs/swagger/swagger.json';
-import swaggerSpec from "@/configs/swagger/swagger-docs";
-import routes from "@/packages/routes";
 import createAssociations from './databases/models/associations/associations';
 import errorMiddleware from './middlewares/error-middleware';
+import morganMiddleware from '@/configs/logger/morganMiddleware'
+import routesV1 from "@/packages/routes";
+import { sequelize } from './databases/models';
+import swaggerFile from '@/configs/swagger/swagger.json';
+import swaggerSpec from "@/configs/swagger/swagger-docs";
+import swaggerUI from "swagger-ui-express";
+
 // import connectDB from '@/configs/db/mongodb';
 
 const app: Express = express();
@@ -34,7 +36,7 @@ app.use(morganMiddleware);
 app.use(express.static("public"));
 
 // API routes
-app.use("/api", routes);
+app.use("/api/v1", routesV1);
 
 app.get('/', (req: Request, res: Response) => {
     res.send('Hello, World!');

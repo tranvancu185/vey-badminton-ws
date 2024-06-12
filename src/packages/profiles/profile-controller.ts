@@ -19,11 +19,15 @@ export class ProfileController extends BaseController {
     public async GetProfile(req: Request, res: Response, next: NextFunction) {
         const logger = this.createLogger({});
         try {
+            console.log('---------------------------------')
             const profile = req.auth ?? null;
+            if (profile == null) {
+                next(this.appError({ message: 'User not found!', message_code: 'USER_NOT_FOUND', statusCode: 404 }));
+            }
             const ip = req.ip;
             res.status(200).json({
                 ...usersMessage.GET_USER_SUCCESS, status: 1, data: {
-                    ...profile,
+                    profile: profile,
                     ip
                 }
             })

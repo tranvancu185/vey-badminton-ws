@@ -10,7 +10,7 @@ const profileRouter: Router = express.Router();
 
 profileRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
     const profileController = new ProfileController();
-    await profileController.GetDetailUser(req, res, next);
+    await profileController.GetProfile(req, res, next);
 });
 
 profileRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) => {

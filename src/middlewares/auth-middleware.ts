@@ -1,14 +1,16 @@
-import { Request, Response, NextFunction } from 'express';
-import jwt from 'jsonwebtoken';
-import commonMessage from '@/utils/message/common.message';
-import UserService from '@/packages/users/user-services';
-import CONSTANTS from '@/utils/constants';
+import { NextFunction, Request, Response } from 'express';
+
 import AppError from '@/utils/appError';
+import CONSTANTS from '@/utils/constants';
+import UserService from '@/packages/users/user-services';
+import commonMessage from '@/utils/message/common.message';
+import jwt from 'jsonwebtoken';
+import { permission } from 'process';
 
 const authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
     try {
         const authHeader = req.headers.authorization;
-        console.log(authHeader)
+
         const token = authHeader?.split(' ')[1]; // Optional chaining
 
         if (!token) {
@@ -21,16 +23,22 @@ const authenticateToken = async (req: Request, res: Response, next: NextFunction
             return next(new AppError(commonMessage.TOKEN_INVALID.message, 403, commonMessage.TOKEN_INVALID.message_code));
         }
 
-        const userDetail = await new UserService().getByCondition({
+        const userService = new UserService();
+        const userDetail = await userService.getByCondition({
             user_id: decodedToken.user_id,
             include: [CONSTANTS.KEY_INCLUDE_USER.PERMISSION, CONSTANTS.KEY_INCLUDE_USER.ROLE]
         });
-        console.log(userDetail);
+
         if (!userDetail) {
             return next(new AppError(commonMessage.NOT_FOUND.message, 404, commonMessage.NOT_FOUND.message_code));
         }
-
-        req.auth = userDetail;
+        const permissions = userDetail?.permissions?.map(permission => permission.permission_code);
+        const role = userDetail?.role?.role_code;
+        req.auth = {
+            user_id: userDetail.user_id,
+            permissions: permissions,
+            role: role
+        };
 
         next(); // Cho phép truy cập vào route tiếp theo
     } catch (err: any) {

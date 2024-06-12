@@ -1,9 +1,10 @@
 // src/models/role.model.ts
 
 import { DataTypes, Model, ModelAttributes } from 'sequelize';
+
 import { sequelize } from './index';
 
-interface RoleAttributes {
+export interface RoleAttributes {
     role_id: number;
     role_name: string;
     role_description?: string; // Cho phép null
