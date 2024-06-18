@@ -1,13 +1,13 @@
-import { Op, FindOptions, InferAttributes } from 'sequelize';
+import { FindOptions, InferAttributes, Op } from 'sequelize';
 
-import User from "@/databases/models/users.model";
+import BaseService from '../commons/base.services';
+import CONSTANTS from "@/utils/constants"
+import IUser from './profile.interfaces';
+import { IUserFilterParams } from './profile.interfaces';
 import Permission from '@/databases/models/permissions.model';
 import Role from '@/databases/models/roles.model';
+import User from "@/databases/models/users.model";
 
-import { IUserFilterParams } from './profile-interfaces';
-import BaseService from '../commons/base-services';
-import IUser from './profile-interfaces';
-import CONSTANTS from "@/utils/constants"
 export default class ProfileService extends BaseService<User> {
 
     constructor() {

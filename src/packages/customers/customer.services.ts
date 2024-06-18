@@ -1,8 +1,9 @@
-import { Op, FindOptions, InferAttributes } from 'sequelize';
+import { FindOptions, InferAttributes, Op } from 'sequelize';
+
+import BaseService from '../commons/base.services';
 import Customer from '@/databases/models/customers.model';
-import { IFilterParams } from './customer-interfaces';
-import BaseService from '../commons/base-services';
-import ICustomer from './customer-interfaces';
+import ICustomer from './customer.interfaces';
+import { IFilterParams } from './customer.interfaces';
 
 export default class CustomerService extends BaseService<Customer> {
 

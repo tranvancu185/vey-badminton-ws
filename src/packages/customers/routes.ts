@@ -1,6 +1,7 @@
-import express, { Router, Request, Response, NextFunction } from 'express';
-import { CustomerController } from './customer-controller';
-import checkPermission from '@/middlewares/checkPermission-middleware';
+import express, { NextFunction, Request, Response, Router } from 'express';
+
+import { CustomerController } from './customer.controller';
+import checkPermission from '@/middlewares/check-permission.middleware';
 
 // Create a new router instance
 const customerRouter: Router = express.Router();

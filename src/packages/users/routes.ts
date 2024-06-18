@@ -1,9 +1,10 @@
-import express, { Router, Request, Response, NextFunction } from 'express';
-import validationMiddleware from '@/middlewares/validation-middleware';
-import checkPermission from '@/middlewares/checkPermission-middleware';
+import express, { NextFunction, Request, Response, Router } from 'express';
 
-import { UserController } from './user-controller';
+import { UserController } from './user.controller';
+import checkPermission from '@/middlewares/check-permission.middleware';
 import { filterSchema } from '@/validations/user.schema';
+import validationMiddleware from '@/middlewares/validation.middleware';
+
 // Create a new router instance
 const userRouter: Router = express.Router();
 // Define your routes

@@ -2,10 +2,9 @@ import { NextFunction, Request, Response } from 'express';
 
 import AppError from '@/utils/appError';
 import CONSTANTS from '@/utils/constants';
-import UserService from '@/packages/users/user-services';
+import UserService from '@/packages/users/user.services';
 import commonMessage from '@/utils/message/common.message';
 import jwt from 'jsonwebtoken';
-import { permission } from 'process';
 
 const authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
     try {

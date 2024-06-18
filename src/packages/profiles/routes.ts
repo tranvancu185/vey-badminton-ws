@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response, Router } from 'express';
 
-import { ProfileController } from './profile-controller';
-import checkPermission from '@/middlewares/checkPermission-middleware';
-import validationMiddleware from '@/middlewares/validation-middleware';
+import { ProfileController } from './profile.controller';
+import checkPermission from '@/middlewares/check-permission.middleware';
+import validationMiddleware from '@/middlewares/validation.middleware';
 
 // Create a new router instance
 const profileRouter: Router = express.Router();

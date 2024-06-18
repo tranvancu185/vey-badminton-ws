@@ -1,11 +1,17 @@
 import express, { Router } from 'express';
 
-// import routers
-import userRouter from "@/packages/users/routes"
 import authRouter from '@/packages/auth/routes';
+import authenticateToken from '@/middlewares/auth.middleware';
 import customerRouter from './customers/routes';
-import authenticateToken from '@/middlewares/auth-middleware';
 import profileRouter from './profiles/routes';
+import userRouter from "@/packages/users/routes"
+
+// import routers
+
+
+
+
+
 
 // Create a new router instance
 const router: Router = express.Router();

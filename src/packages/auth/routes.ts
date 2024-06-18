@@ -1,5 +1,6 @@
-import express, { Router, Request, Response, NextFunction } from 'express';
-import { AuthController } from './auth-controller';
+import express, { NextFunction, Request, Response, Router } from 'express';
+
+import { AuthController } from './auth.controller';
 
 // Create a new router instance
 const authRouter: Router = express.Router();

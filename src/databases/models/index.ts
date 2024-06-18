@@ -1,4 +1,5 @@
 require('dotenv').config()
+
 import { Sequelize } from 'sequelize'
 
 const env = process.env.NODE_ENV || 'development'

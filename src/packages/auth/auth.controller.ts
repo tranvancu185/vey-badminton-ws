@@ -1,13 +1,13 @@
-import { Request, Response, NextFunction } from "express";
-import BaseController from "@/packages/commons/base-controller";
+import { NextFunction, Request, Response } from "express";
 
+import BaseController from "@/packages/commons/base.controller";
+import { ILoginResponse } from "@/packages/auth/auth.interfaces";
+import UserService from "../users/user.services";
+import authMessage from "../../utils/message/auth.message"
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
-
-import UserService from "../users/user-services";
-import { ILoginResponse } from "@/packages/auth/auth-interfaces";
 import { loginSchema } from "@/validations/auth.schema";
-import authMessage from "../../utils/message/auth.message"
+
 export class AuthController extends BaseController {
 
     private userService: UserService;

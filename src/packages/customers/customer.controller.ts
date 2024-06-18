@@ -1,9 +1,13 @@
-import { Request, Response, NextFunction } from "express";
-import { IFilterParams } from "@/packages/customers/customer-interfaces";
-import BaseController from "@/packages/commons/base-controller";
-// import { Get, Tags } from "tsoa";
-import CustomerService from "./customer-services";
+import { NextFunction, Request, Response } from "express";
+
+import BaseController from "@/packages/commons/base.controller";
+import CustomerService from "./customer.services";
+import { IFilterParams } from "@/packages/customers/customer.interfaces";
 import customersMessage from "@/utils/message/customers.message";
+
+// import { Get, Tags } from "tsoa";
+
+
 
 export class CustomerController extends BaseController {
 

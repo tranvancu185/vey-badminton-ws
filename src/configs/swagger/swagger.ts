@@ -54,7 +54,7 @@ const doc = {
 };
 
 const outputFile = './swagger.json';
-const endpointsFiles = ['./src/server.ts']; // Đường dẫn đến các file định nghĩa route
+const endpointsFiles = ['./server.ts']; // Đường dẫn đến các file định nghĩa route
 // const endpointsFiles = ['./src/packages/*/routes.ts']; // Đường dẫn đến các file định nghĩa route
 
 swaggerAutogen(outputFile, endpointsFiles, doc);
