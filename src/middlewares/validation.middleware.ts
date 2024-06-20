@@ -1,23 +1,23 @@
+import { NextFunction, Request, Response } from 'express';
+import { ZodError, z } from 'zod';
+
 import AppError from '@/utils/appError';
-import commonMessage from '@/utils/message/common.message';
-import { Request, Response, NextFunction } from 'express';
-import { z, ZodError } from 'zod';
+import message from '@/utils/message/message';
 
 const validationMiddleware = (schema: z.ZodTypeAny) => (req: Request, res: Response, next: NextFunction) => {
     try {
-        schema.parse({
-            body: req.body,
-            query: req.query,
-            params: req.params,
-        });
+        if (schema !== undefined && schema !== null) {
+            if (req.body) {
+                schema.parse(req.body);
+            } else if (req.query) {
+                schema.parse(req.query);
+            } else if (req.params) {
+                schema.parse(req.params);
+            }
+        }
         next();
     } catch (error) {
-        if (error instanceof ZodError) {
-            // next(new AppError(commonMessage.INTERNAL_ERROR.message, 400, commonMessage.INTERNAL_ERROR.message_code));
-            res.status(400).json({ errors: error.format() });
-        } else {
-            next(error); // Pass other errors to the error handler
-        }
+        next(error); // Pass other errors to the error handler
     }
 };
 

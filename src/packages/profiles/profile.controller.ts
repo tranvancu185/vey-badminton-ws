@@ -2,17 +2,23 @@ import { NextFunction, Request, Response } from "express";
 
 import BaseController from "@/packages/commons/base.controller";
 import UserService from "@/packages/users/user.services";
-import usersMessage from "@/utils/message/users.message";
+import message from "@/utils/message/message";
 
 // import { Get, Tags } from "tsoa";
 
-
 class ProfileController extends BaseController {
-
+    private static instance: ProfileController;
     private service: UserService;
     constructor() {
         super();
         this.service = new UserService();
+    }
+
+    public static getInstance() {
+        if (!ProfileController.instance) {
+            ProfileController.instance = new ProfileController();
+        }
+        return ProfileController.instance;
     }
 
     public async GetProfile(req: Request, res: Response, next: NextFunction) {
@@ -25,7 +31,7 @@ class ProfileController extends BaseController {
             }
             const ip = req.ip;
             res.status(200).json({
-                ...usersMessage.GET_USER_SUCCESS, status: 1, data: {
+                ...message.GET_USER_SUCCESS, status: 1, data: {
                     ...profile,
                     ip
                 }
@@ -41,7 +47,7 @@ class ProfileController extends BaseController {
         try {
             const user_id = req?.auth?.user_id;
             const dataUser = await this.service.getById(user_id);
-            res.status(200).json({ ...usersMessage.GET_USER_SUCCESS, status: 1, data: dataUser })
+            res.status(200).json({ ...message.GET_USER_SUCCESS, status: 1, data: dataUser })
         } catch (error) {
             logger.error(`GET USER DETAIL FAILED: ${error}`);
             next(error);
@@ -54,7 +60,7 @@ class ProfileController extends BaseController {
             const id = req.params.id;
             const updatedUser = this.service.parseBody(req.body);
             const dataUser = await this.service.updateById(id, updatedUser);
-            res.status(200).json({ ...usersMessage.EDIT_USER_SUCCESS, status: 1, data: dataUser })
+            res.status(200).json({ ...message.EDIT_USER_SUCCESS, status: 1, data: dataUser })
         } catch (error) {
             logger.error(`UPDATE USER FAILED: ${error}`);
             next(error);
@@ -63,4 +69,4 @@ class ProfileController extends BaseController {
 
 }
 
-export default new ProfileController();
+export default ProfileController.getInstance();

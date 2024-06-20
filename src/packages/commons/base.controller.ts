@@ -7,19 +7,19 @@ import CONSTANT from "@/utils/constants"
 export default class BaseController {
     protected CONSTANTS = CONSTANT;
 
-    public formatString() {
+    protected formatString() {
         return true;
     }
 
-    public appError({ message, message_code, statusCode }: { message: string, message_code: string, statusCode: number }) {
+    protected appError({ message, message_code, statusCode }: { message: string, message_code: string, statusCode: number }) {
         return new AppError(message, statusCode, message_code);
     }
 
-    public createLogger({ fileName, infoLog, includeDate }: ILogger) {
+    protected createLogger({ fileName, infoLog, includeDate }: ILogger) {
         return Logger({ fileName, infoLog, includeDate });
     }
 
-    public parseJSON = (json: string) => {
+    protected parseJSON = (json: string) => {
         try {
             return JSON.parse(json);
         } catch (error) {
@@ -28,7 +28,7 @@ export default class BaseController {
         }
     }
 
-    public loggerDiscord({ level, message, error, json, description, meta }: IDiscordLogger) {
+    protected loggerDiscord({ level, message, error, json, description, meta }: IDiscordLogger) {
         try {
             switch (level) {
                 case 'error':

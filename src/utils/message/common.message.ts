@@ -1,29 +1,29 @@
 export default {
-    INTERNAL_ERROR: {
+    "INTERNAL_ERROR": {
         message: 'Internal Server Error!',
         message_code: 'internal_error'
     },
-    UNAUTHORIZED: {
+    "UNAUTHORIZED": {
         message: 'Unauthorized!',
         message_code: 'unauthorized'
     },
-    TOKEN_EXPIRED: {
+    "TOKEN_EXPIRED": {
         message: 'Token Expired!',
         message_code: 'token_expired'
     },
-    TOKEN_INVALID: {
+    "TOKEN_INVALID": {
         message: 'Token Invalid!',
         message_code: 'token_invalid'
     },
-    FORBIDDEN: {
+    "FORBIDDEN": {
         message: 'Forbidden!',
         message_code: 'forbidden'
     },
-    NOT_FOUND: {
+    "NOT_FOUND": {
         message: 'Not Found!',
         message_code: 'not_found'
     },
-    SUCCESS: {
+    "SUCCESS": {
         message: 'Success!',
         message_code: 'success'
     },

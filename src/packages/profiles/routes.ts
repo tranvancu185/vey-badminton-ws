@@ -8,11 +8,18 @@ import validationMiddleware from '@/middlewares/validation.middleware';
 const profileRouter: Router = express.Router();
 // Define your routes
 
-profileRouter.get('/', ProfileController.GetProfile);
+profileRouter.get(
+    '/',
+    (req, res, next) => ProfileController.GetProfile(req, res, next)
+);
 
-profileRouter.get('/:id', ProfileController.GetDetailUser);
+profileRouter.get(
+    '/:id', (req, res, next) => ProfileController.GetDetailUser(req, res, next)
+);
 
-profileRouter.put('/:id/edit', ProfileController.UpdateUser);
+profileRouter.put(
+    '/:id/edit', (req, res, next) => ProfileController.UpdateUser(req, res, next)
+);
 
 // Export the router
 export default profileRouter;

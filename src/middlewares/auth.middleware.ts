@@ -3,8 +3,8 @@ import { NextFunction, Request, Response } from 'express';
 import AppError from '@/utils/appError';
 import CONSTANTS from '@/utils/constants';
 import UserService from '@/packages/users/user.services';
-import commonMessage from '@/utils/message/common.message';
 import jwt from 'jsonwebtoken';
+import message from '@/utils/message/message';
 
 const authenticateToken = async (req: Request, res: Response, next: NextFunction) => {
     try {
@@ -13,13 +13,13 @@ const authenticateToken = async (req: Request, res: Response, next: NextFunction
         const token = authHeader?.split(' ')[1]; // Optional chaining
 
         if (!token) {
-            return next(new AppError(commonMessage.UNAUTHORIZED.message, 401, commonMessage.UNAUTHORIZED.message_code));
+            return next(new AppError(message.UNAUTHORIZED.message, 401, message.UNAUTHORIZED.message_code));
         }
 
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET!) as { user_id: number };
 
         if (!decodedToken || !decodedToken.user_id) {
-            return next(new AppError(commonMessage.TOKEN_INVALID.message, 403, commonMessage.TOKEN_INVALID.message_code));
+            return next(new AppError(message.TOKEN_INVALID.message, 403, message.TOKEN_INVALID.message_code));
         }
 
         const userService = new UserService();
@@ -29,7 +29,7 @@ const authenticateToken = async (req: Request, res: Response, next: NextFunction
         });
 
         if (!userDetail) {
-            return next(new AppError(commonMessage.NOT_FOUND.message, 404, commonMessage.NOT_FOUND.message_code));
+            return next(new AppError(message.NOT_FOUND.message, 404, message.NOT_FOUND.message_code));
         }
         const permissions = userDetail?.permissions?.map(permission => permission.permission_code);
         const role = userDetail?.role;
@@ -67,7 +67,7 @@ const authenticateToken = async (req: Request, res: Response, next: NextFunction
     } catch (err: any) {
         // Xử lý lỗi hết hạn token
         if (err.name === 'TokenExpiredError') {
-            return res.status(401).json({ ...commonMessage.TOKEN_EXPIRED });
+            return res.status(401).json({ ...message.TOKEN_EXPIRED });
         }
         next(err);
     }

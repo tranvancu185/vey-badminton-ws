@@ -5,14 +5,15 @@ import BaseController from "@/packages/commons/base.controller";
 import CustomerService from "../customers/customer.services";
 import { ILoginResponse } from "@/packages/auth/auth.interfaces";
 import UserService from "../users/user.services";
-import authMessage from "../../utils/message/auth.message"
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
+import message from "../../utils/message/message"
 import moment from "moment";
 
 class AuthController extends BaseController {
 
+    private static instance: AuthController;
     private userService: UserService;
     private customerService: CustomerService;
 
@@ -20,6 +21,13 @@ class AuthController extends BaseController {
         super();
         this.userService = new UserService();
         this.customerService = new CustomerService();
+    }
+
+    public static getInstance() {
+        if (!AuthController.instance) {
+            AuthController.instance = new AuthController();
+        }
+        return AuthController.instance;
     }
 
     public async Login(req: Request, res: Response, next: NextFunction) {
@@ -36,7 +44,7 @@ class AuthController extends BaseController {
             });
             if (!user) {
                 return next(this.appError({
-                    ...authMessage.INVALID_LOGIN,
+                    ...message.INVALID_LOGIN,
                     statusCode: 401
                 }));
             }
@@ -45,7 +53,7 @@ class AuthController extends BaseController {
             const isPasswordValid = await bcrypt.compare(user_password, user.user_password);
             if (!isPasswordValid) {
                 return next(this.appError({
-                    ...authMessage.INVALID_LOGIN,
+                    ...message.INVALID_LOGIN,
                     statusCode: 401
                 }));
             }
@@ -64,7 +72,7 @@ class AuthController extends BaseController {
 
             // 5. Trả về kết quả thành công
             const dataRespone: ILoginResponse = {
-                ...authMessage.LOGIN_SUCCESS,
+                ...message.LOGIN_SUCCESS,
                 status: 1,
                 data: {
                     token,
@@ -90,7 +98,7 @@ class AuthController extends BaseController {
         // res.clearCookie('refreshToken', { httpOnly: true, secure: true });
 
         // Trả về response thành công
-        res.sendStatus(200).json(authMessage.LOGOUT_SUCCESS); // Hoặc res.json({ message: 'Logout successful' });
+        res.sendStatus(200).json(message.LOGOUT_SUCCESS); // Hoặc res.json({ message: 'Logout successful' });
     }
 
     // public LoginCustomer = async (req: Request, res: Response, next: NextFunction) => {
@@ -119,7 +127,7 @@ class AuthController extends BaseController {
             if (customer) {
                 infoLog.action.push(`Email or Phone existed: ${customer_email} - ${customer_phone}`);
                 return next(this.appError({
-                    ...authMessage.EMAIL_PHONE_EXISTED,
+                    ...message.EMAIL_PHONE_EXISTED,
                     statusCode: 400
                 }));
             }
@@ -143,7 +151,7 @@ class AuthController extends BaseController {
             }
 
             // 4. Trả về kết quả thành công
-            res.status(200).json({ ...authMessage.SIGN_UP_SUCCESS, status: 1, data: newCustomer });
+            res.status(200).json({ ...message.SIGN_UP_SUCCESS, status: 1, data: newCustomer });
         } catch (error) {
             const err = error as Error;
             logger.error(JSON.stringify({ error: { name: err.name, message: err.message, stack: err.stack, }, params: req.body, description: 'Sign up failed!', infoLog }));
@@ -152,4 +160,4 @@ class AuthController extends BaseController {
     }
 }
 
-export default new AuthController();
+export default AuthController.getInstance();

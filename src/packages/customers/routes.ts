@@ -7,15 +7,35 @@ import checkPermission from '@/middlewares/check-permission.middleware';
 const customerRouter: Router = express.Router();
 // Define your routes
 
-customerRouter.get('/', checkPermission(['customers_list']), CustomerController.GetListCustomers);
+customerRouter.get(
+    '/',
+    checkPermission(['customers_list']),
+    (req, res, next) => CustomerController.GetListCustomers(req, res, next)
+);
 
-customerRouter.get('/:id', checkPermission(['customers_view']), CustomerController.GetDetailCustomer);
+customerRouter.get(
+    '/:id',
+    checkPermission(['customers_view']),
+    (req, res, next) => CustomerController.GetDetailCustomer(req, res, next)
+);
 
-customerRouter.post('/create', checkPermission(['customers_create']), CustomerController.CreateCustomer);
+customerRouter.post(
+    '/create',
+    checkPermission(['customers_create']),
+    (req, res, next) => CustomerController.CreateCustomer(req, res, next)
+);
 
-customerRouter.put('/:id/edit', checkPermission(['customers_edit']), CustomerController.UpdateCustomer);
+customerRouter.put(
+    '/:id/edit',
+    checkPermission(['customers_edit']),
+    (req, res, next) => CustomerController.UpdateCustomer(req, res, next)
+);
 
-customerRouter.delete('/:id/delete', checkPermission(['customers_delete']), CustomerController.DeleteCustomer);
+customerRouter.delete(
+    '/:id/delete',
+    checkPermission(['customers_delete']),
+    (req, res, next) => CustomerController.DeleteCustomer(req, res, next)
+);
 
 // Export the router
 export default customerRouter;
