@@ -9,8 +9,6 @@ const validationMiddleware = (schema: z.ZodTypeAny) => (req: Request, res: Respo
         if (schema !== undefined && schema !== null) {
             if (req.body) {
                 schema.parse(req.body);
-            } else if (req.query) {
-                schema.parse(req.query);
             } else if (req.params) {
                 schema.parse(req.params);
             }
