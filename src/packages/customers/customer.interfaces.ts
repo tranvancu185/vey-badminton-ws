@@ -27,6 +27,9 @@ export interface IFilterParams extends IBaseFilterParams {
     delete_from_date?: number; // Giả sử là timestamp
     delete_to_date?: number; // Giả sử là timestamp
     need_password?: number;
+    customer_name_or?: number; // 1: OR, 0: AND
+    customer_email_or?: number; // 1: OR, 0: AND
+    customer_phone_or?: number; // 1: OR, 0: AND
 }
 
 export default interface ICustomer {

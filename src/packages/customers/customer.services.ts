@@ -27,26 +27,49 @@ export default class CustomerService extends BaseService<Customer> {
 
         if (params.customer_name !== undefined) {
             // Nếu customer_name_fix = 1 thì tìm chính xác, ngược lại tìm theo like
-            params.customer_name_fix ?
-                andQuery.push({ customer_name: params.customer_name })
-                :
-                orQuery.push({ customer_name: { [Op.like]: `%${params.customer_name}%` } });
+            if (params.customer_name_or !== undefined) {
+                params.customer_name_fix ?
+                    orQuery.push({ customer_name: params.customer_name })
+                    :
+                    orQuery.push({ customer_name: { [Op.like]: `%${params.customer_name}%` } });
+            } else {
+                params.customer_name_fix ?
+                    andQuery.push({ customer_name: params.customer_name })
+                    :
+                    andQuery.push({ customer_name: { [Op.like]: `%${params.customer_name}%` } });
+            }
+
         }
 
         if (params.customer_email !== undefined) {
             // Nếu customer_email_fix = 1 thì tìm chính xác, ngược lại tìm theo like
-            params.customer_email_fix ?
-                andQuery.push({ customer_email: params.customer_email })
-                :
-                orQuery.push({ customer_email: { [Op.like]: `%${params.customer_email}%` } });
+            if (params.customer_email_or) {
+                params.customer_email_fix ?
+                    orQuery.push({ customer_email: params.customer_email })
+                    :
+                    orQuery.push({ customer_email: { [Op.like]: `%${params.customer_email}%` } });
+            } else {
+                params.customer_email_fix ?
+                    andQuery.push({ customer_email: params.customer_email })
+                    :
+                    andQuery.push({ customer_email: { [Op.like]: `%${params.customer_email}%` } });
+            }
         }
 
         if (params.customer_phone !== undefined) {
             // Nếu customer_phone_fix = 1 thì tìm chính xác, ngược lại tìm theo like
-            params.customer_phone_fix ?
-                andQuery.push({ customer_phone: params.customer_phone })
-                :
-                orQuery.push({ customer_phone: { [Op.like]: `%${params.customer_phone}%` } });
+            if (params.customer_phone_or !== undefined) {
+                params.customer_phone_fix ?
+                    orQuery.push({ customer_phone: params.customer_phone })
+                    :
+                    orQuery.push({ customer_phone: { [Op.like]: `%${params.customer_phone}%` } });
+            } else {
+                params.customer_phone_fix ?
+                    andQuery.push({ customer_phone: params.customer_phone })
+                    :
+                    andQuery.push({ customer_phone: { [Op.like]: `%${params.customer_phone}%` } });
+            }
+
         }
 
         if (params.customer_status !== undefined) {
@@ -57,7 +80,7 @@ export default class CustomerService extends BaseService<Customer> {
         }
 
         if (params.customer_code !== undefined) {
-            orQuery.push({ customer_code: params.customer_code });
+            andQuery.push({ customer_code: params.customer_code });
         }
 
         if (params.customer_create_by !== undefined) {
@@ -96,7 +119,7 @@ export default class CustomerService extends BaseService<Customer> {
         if (andQuery.length !== 0) {
             whereQuery[Op.and] = andQuery;
         }
-        console.log(params)
+
         // option attributes
         let attributes: any = { exclude: ['customer_password'] };
         if (params.exclude !== undefined) {

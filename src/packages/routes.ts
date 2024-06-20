@@ -8,11 +8,6 @@ import userRouter from "@/packages/users/routes"
 
 // import routers
 
-
-
-
-
-
 // Create a new router instance
 const router: Router = express.Router();
 

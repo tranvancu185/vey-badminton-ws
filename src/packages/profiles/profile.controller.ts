@@ -7,7 +7,7 @@ import usersMessage from "@/utils/message/users.message";
 // import { Get, Tags } from "tsoa";
 
 
-export class ProfileController extends BaseController {
+class ProfileController extends BaseController {
 
     private service: UserService;
     constructor() {
@@ -63,3 +63,4 @@ export class ProfileController extends BaseController {
 
 }
 
+export default new ProfileController();

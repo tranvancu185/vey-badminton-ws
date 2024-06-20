@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response, Router } from 'express';
 
-import { ProfileController } from './profile.controller';
+import ProfileController from './profile.controller';
 import checkPermission from '@/middlewares/check-permission.middleware';
 import validationMiddleware from '@/middlewares/validation.middleware';
 
@@ -8,20 +8,11 @@ import validationMiddleware from '@/middlewares/validation.middleware';
 const profileRouter: Router = express.Router();
 // Define your routes
 
-profileRouter.get('/', async (req: Request, res: Response, next: NextFunction) => {
-    const profileController = new ProfileController();
-    await profileController.GetProfile(req, res, next);
-});
+profileRouter.get('/', ProfileController.GetProfile);
 
-profileRouter.get('/:id', async (req: Request, res: Response, next: NextFunction) => {
-    const profileController = new ProfileController();
-    await profileController.GetDetailUser(req, res, next);
-});
+profileRouter.get('/:id', ProfileController.GetDetailUser);
 
-profileRouter.put('/:id/edit', async (req: Request, res: Response, next: NextFunction) => {
-    const profileController = new ProfileController();
-    await profileController.UpdateUser(req, res, next);
-});
+profileRouter.put('/:id/edit', ProfileController.UpdateUser);
 
 // Export the router
 export default profileRouter;

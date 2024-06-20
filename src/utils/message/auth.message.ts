@@ -18,5 +18,25 @@ export default {
     INVALID_LOGIN: {
         message: 'User not found or invalid credentials!',
         message_code: 'invalid_login'
-    }
+    },
+    SIGN_UP_SUCCESS: {
+        message: 'Sign up successfully!',
+        message_code: 'sign_up_success'
+    },
+    SIGN_UP_FAILED: {
+        message: 'Sign up failed!',
+        message_code: 'sign_up_failed'
+    },
+    EMAIL_EXISTED: {
+        message: 'Email existed!',
+        message_code: 'email_existed'
+    },
+    PHONE_EXISTED: {
+        message: 'Phone existed!',
+        message_code: 'phone_existed'
+    },
+    EMAIL_PHONE_EXISTED: {
+        message: 'Email or Phone existed!',
+        message_code: 'email_phone_existed'
+    },
 }

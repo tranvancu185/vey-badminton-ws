@@ -9,7 +9,7 @@ import customersMessage from "@/utils/message/customers.message";
 
 
 
-export class CustomerController extends BaseController {
+class CustomerController extends BaseController {
 
     private service: CustomerService;
     constructor() {
@@ -79,4 +79,6 @@ export class CustomerController extends BaseController {
     }
 
 }
+
+export default new CustomerController();
 

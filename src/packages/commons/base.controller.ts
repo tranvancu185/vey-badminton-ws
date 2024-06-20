@@ -1,5 +1,6 @@
-import loggerDiscord, { IDiscordLogger } from "@/utils/discord-logger";
 import createLogger, { IProps as ILogger } from "@/utils/logger";
+import loggerDiscord, { IDiscordLogger } from "@/utils/discord-logger";
+
 import AppError from "@/utils/appError";
 import CONSTANT from "@/utils/constants"
 
