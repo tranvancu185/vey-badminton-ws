@@ -35,7 +35,7 @@ export interface IProps {
     includeDate?: boolean;
 }
 
-const createLogger = ({ fileName, infoLog, includeDate = true }: IProps) => {
+const Logger = ({ fileName, infoLog, includeDate = true }: IProps) => {
     const currentdate = moment().format('YYYY-MM-DD')
     // This method set the current severity based on 
     // the current NODE_ENV: show all the log levels 
@@ -84,4 +84,4 @@ const createLogger = ({ fileName, infoLog, includeDate = true }: IProps) => {
 }
 
 
-export default createLogger
+export default Logger

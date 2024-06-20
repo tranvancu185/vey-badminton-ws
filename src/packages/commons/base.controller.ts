@@ -1,4 +1,4 @@
-import createLogger, { IProps as ILogger } from "@/utils/logger";
+import Logger, { IProps as ILogger } from "@/utils/logger";
 import loggerDiscord, { IDiscordLogger } from "@/utils/discord-logger";
 
 import AppError from "@/utils/appError";
@@ -16,7 +16,7 @@ export default class BaseController {
     }
 
     public createLogger({ fileName, infoLog, includeDate }: ILogger) {
-        return createLogger({ fileName, infoLog, includeDate });
+        return Logger({ fileName, infoLog, includeDate });
     }
 
     public parseJSON = (json: string) => {

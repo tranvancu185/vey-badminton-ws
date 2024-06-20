@@ -1,4 +1,4 @@
-import { IBaseResponse } from '@/packages/commons/base-interfaces'
+import { IBaseResponse } from '@/packages/commons/base.interfaces'
 
 export interface ILoginRepsponseData {
     token: string;
