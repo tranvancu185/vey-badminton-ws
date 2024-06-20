@@ -1,8 +1,8 @@
 import express, { NextFunction, Request, Response, Router } from 'express';
+import { filterSchema, registerUserSchema } from '@/validations/user.schema';
 
 import UserController from './user.controller';
 import checkPermission from '@/middlewares/check-permission.middleware';
-import { filterSchema } from '@/validations/user.schema';
 import validationMiddleware from '@/middlewares/validation.middleware';
 
 // Create a new router instance
@@ -25,6 +25,7 @@ userRouter.get(
 userRouter.post(
     '/create',
     checkPermission(['users_create']),
+    validationMiddleware(registerUserSchema),
     (req, res, next) => UserController.CreateUser(req, res, next)
 );
 
