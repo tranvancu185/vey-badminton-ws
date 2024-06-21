@@ -5,7 +5,6 @@ import 'module-alias/register';
 import express, { Express, Request, Response } from "express";
 
 import Database from '@/databases/connect/db';
-import bodyParser from "body-parser";
 import { checkOverload } from '@/helpers/check.connect';
 import compression from 'compression';
 import cors from 'cors';
@@ -31,8 +30,8 @@ const app: Express = express();
 app.use(cors());
 app.use(compression());
 app.use(helmet());
-app.use(bodyParser.urlencoded({ extended: true, }));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 app.use(morganMiddleware);
 // Connect DB

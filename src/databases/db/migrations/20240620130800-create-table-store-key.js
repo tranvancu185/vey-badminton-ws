@@ -8,12 +8,29 @@ module.exports = {
      * Example:
      * await queryInterface.createTable('users', { id: Sequelize.INTEGER });
      */
-    return await queryInterface.createTable('store_keys', {
-      store_key_id: {
+    return await queryInterface.createTable('keys_token', {
+      key_id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
+      },
+      user_id: {
+        allowNull: false,
+        type: Sequelize.INTEGER,
+      },
+      user_code: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      public_key: {
+        allowNull: false,
+        type: Sequelize.STRING,
+      },
+      refresh_token: {
+        allowNull: true,
+        default: [],
+        type: Sequelize.STRING,
       },
     });
   },
@@ -25,5 +42,6 @@ module.exports = {
      * Example:
      * await queryInterface.dropTable('users');
      */
+    await queryInterface.dropTable('keys_token');
   }
 };

@@ -1,10 +1,10 @@
 import express, { Router } from 'express';
 
-import authRouter from '@/packages/auth/routes';
+import authRouter from '@/packages/routes/auth.routes';
 import authenticateToken from '@/middlewares/auth.middleware';
-import customerRouter from './customers/routes';
-import profileRouter from './profiles/routes';
-import userRouter from "@/packages/users/routes"
+import customerRouter from './routes/customer.routes';
+import profileRouter from './routes/profile.routes';
+import userRouter from "@/packages/routes/user.routes"
 
 // import routers
 
