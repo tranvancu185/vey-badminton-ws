@@ -1,9 +1,9 @@
 import { FindOptions, InferAttributes, Op } from 'sequelize';
 
-import BaseService from '../commons/base.services';
+import BaseService from '@/packages/commons/base.service';
 import CONSTANTS from "@/utils/constants"
-import IUser from '../interfaces/profile.interfaces';
-import { IUserFilterParams } from '../interfaces/profile.interfaces';
+import IUser from '@/databases/models/users.model';
+import { IUserFilterParams } from '@/packages/interfaces/user.interface';
 import Permission from '@/databases/models/permissions.model';
 import Role from '@/databases/models/roles.model';
 import User from "@/databases/models/users.model";

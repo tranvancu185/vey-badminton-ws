@@ -54,7 +54,7 @@ module.exports = {
           model: 'districts',
           key: 'district_id',
           onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
+          onDelete: 'SET NULL',
         },
       },
       city_id: {
@@ -64,7 +64,7 @@ module.exports = {
           model: 'cities',
           key: 'city_id',
           onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
+          onDelete: 'SET NULL',
         },
       }
     });

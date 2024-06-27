@@ -54,30 +54,18 @@ module.exports = {
     //   vendor_id: {
     //     allowNull: false,
     //     type: Sequelize.INTEGER,
-    //     references: {
-    //       model: 'vendors',
-    //       key: 'vendor_id',
-    //     },
     //     onUpdate: 'CASCADE',
     //     onDelete: 'CASCADE',
     //   },
     //   user_id: {
     //     allowNull: false,
     //     type: Sequelize.INTEGER,
-    //     references: {
-    //       model: 'users',
-    //       key: 'user_id',
-    //     },
     //     onUpdate: 'CASCADE',
     //     onDelete: 'CASCADE',
     //   },
     //   warehouse_id: {
     //     allowNull: false,
     //     type: Sequelize.INTEGER,
-    //     references: {
-    //       model: 'warehouse',
-    //       key: 'warehouse_id',
-    //     },
     //     onUpdate: 'CASCADE',
     //     onDelete: 'CASCADE',
     //   },

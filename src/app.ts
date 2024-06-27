@@ -9,6 +9,7 @@ import { checkOverload } from '@/helpers/check.connect';
 import compression from 'compression';
 import cors from 'cors';
 import errorMiddleware from './middlewares/error.middleware';
+import generateCode from './helpers/generate.code';
 import helmet from 'helmet';
 import morganMiddleware from '@/middlewares/morgan.middleware';
 import routesV1 from "@/packages/routes";
@@ -21,7 +22,7 @@ import swaggerUI from "swagger-ui-express";
 const app: Express = express();
 
 // Middle ware
-
+const code = generateCode('CUSTOMER').then(code => console.log(code));
 // app.use(
 //     "/api/docs",
 //     swaggerUI.serve,

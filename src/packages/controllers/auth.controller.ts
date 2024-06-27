@@ -1,12 +1,12 @@
 import { NextFunction, Request, Response } from "express";
-import generateCode, { CODE_TYPE } from "@/helpers/generate.code";
+import generateCode, { CODE_KEY } from "@/helpers/generate.code";
 import { loginSchema, registerCustomerSchema } from "@/validations/auth.schema";
 
-import AuthService from "../services/auth.services";
+import AuthService from "@/packages/services/auth.service";
 import BaseController from "@/packages/commons/base.controller";
-import CustomerService from "@/packages/services/customer.services";
-import { ILoginResponse } from "@/packages/interfaces/auth.interfaces";
-import UserService from "@/packages/services/user.services";
+import CustomerService from "@/packages/services/customer.service";
+import { ILoginResponse } from "@/packages/interfaces/auth.interface";
+import UserService from "@/packages/services/user.service";
 import bcrypt from 'bcrypt';
 import createJWTToken from "@/utils/JWT";
 import crypto from 'crypto';
@@ -138,7 +138,7 @@ class AuthController extends BaseController {
             }
 
             const passwordHash = await bcrypt.hash(customer_password, 10);
-            const customer_code = generateCode('CUSTOMER');
+            const customer_code = generateCode(CODE_KEY.CUSTOMER);
             // 3. Tạo mới khách hàng
             const newCustomer = await this.customerService.insert({
                 customer_join_date: moment().unix(),

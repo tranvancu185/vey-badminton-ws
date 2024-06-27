@@ -133,7 +133,7 @@ User.init(
         user_provice_id: {
             allowNull: true,
             defaultValue: null,
-            type: DataTypes.INTEGER,
+            type: DataTypes.INTEGER
         },
         user_district_id: {
             allowNull: true,

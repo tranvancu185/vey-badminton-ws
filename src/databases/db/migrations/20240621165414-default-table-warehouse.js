@@ -34,12 +34,6 @@ module.exports = {
       store_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {
-          model: 'stores',
-          key: 'store_id',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-        },
       },
     });
   },

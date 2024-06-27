@@ -54,7 +54,7 @@ module.exports = {
           model: 'cities',
           key: 'city_id',
           onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
+          onDelete: 'SET NULL',
         },
       }
     });

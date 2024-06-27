@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 
 import BaseController from "@/packages/commons/base.controller";
-import CustomerService from "@/packages/services/customer.services";
-import { IFilterParams } from "@/packages/interfaces/customer.interfaces";
+import CustomerService from "@/packages/services/customer.service";
+import { IFilterParams } from "@/packages/interfaces/customer.interface";
 import message from "@/utils/message/message";
 
 // import { Get, Tags } from "tsoa";

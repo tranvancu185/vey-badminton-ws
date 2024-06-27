@@ -1,11 +1,11 @@
 import { FindOptions, InferAttributes, Op } from 'sequelize';
 
-import BaseService from '../commons/base.services';
+import BaseService from '../commons/base.service';
 import Customer from '@/databases/models/customers.model';
-import CustomerService from './customer.services';
+import CustomerService from '@/packages/services/customer.service';
 import KeyToken from '@/databases/models/key.model';
 import User from '@/databases/models/users.model';
-import UserService from '@/packages/services/user.services';
+import UserService from '@/packages/services/user.service';
 
 export default class AuthService extends BaseService<User> {
     private customerService: CustomerService;

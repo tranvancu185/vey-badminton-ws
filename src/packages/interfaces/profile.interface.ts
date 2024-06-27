@@ -1,4 +1,4 @@
-import { IBaseFilterParams, IBaseResponse } from '@/packages/commons/base.interfaces'
+import { IBaseFilterParams, IBaseResponse } from '@/packages/commons/base.interface'
 
 export interface IGetListUsersRespone extends IBaseResponse<IUser[]> { }
 

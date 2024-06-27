@@ -18,22 +18,10 @@ module.exports = {
       user_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {
-          model: 'users',
-          key: 'user_id',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-        },
       },
       store_id: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: {
-          model: 'stores',
-          key: 'store_id',
-          onUpdate: 'CASCADE',
-          onDelete: 'CASCADE',
-        },
       },
       user_store_role: {
         allowNull: false,

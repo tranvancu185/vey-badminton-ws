@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from 'express';
 
 import AppError from '@/utils/appError';
 import CONSTANTS from '@/utils/constants';
-import UserService from '@/packages/users/user.services';
+import UserService from '@/packages/services/user.service';
 import jwt from 'jsonwebtoken';
 import message from '@/utils/message/message';
 
