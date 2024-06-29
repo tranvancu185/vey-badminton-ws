@@ -22,7 +22,7 @@ import swaggerUI from "swagger-ui-express";
 const app: Express = express();
 
 // Middle ware
-const code = generateCode('CUSTOMER').then(code => console.log(code));
+// const code = generateCode('CUSTOMER').then(code => console.log(code));
 // app.use(
 //     "/api/docs",
 //     swaggerUI.serve,

@@ -18,14 +18,17 @@ module.exports = {
       product_sku: {
         allowNull: false,
         type: Sequelize.STRING,
+        index: true,
       },
       product_barcode: {
         allowNull: false,
         type: Sequelize.STRING,
+        index: true,
       },
       product_name: {
         allowNull: false,
         type: Sequelize.STRING,
+        index: true
       },
       product_manufactor_name: {
         allowNull: false,
@@ -44,11 +47,13 @@ module.exports = {
         type: Sequelize.INTEGER,
       },
       product_config: {
-        allowNull: true,
+        allowNull: false,
+        default: 0,
         type: Sequelize.INTEGER,
       },
       product_type: {
-        allowNull: true,
+        allowNull: false,
+        default: 0,
         type: Sequelize.INTEGER,
       },
       product_brand_id: {
@@ -57,19 +62,20 @@ module.exports = {
       },
       product_status: {
         allowNull: false,
+        default: 0,
         type: Sequelize.INTEGER,
       },
       product_created_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.INTEGER,
       },
       product_updated_at: {
         allowNull: false,
-        type: Sequelize.DATE,
+        type: Sequelize.INTEGER,
       },
       product_deleted_at: {
         allowNull: true,
-        type: Sequelize.DATE,
+        type: Sequelize.INTEGER,
       },
       product_availability: {
         allowNull: true,
